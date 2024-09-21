@@ -7,11 +7,10 @@ plugins {
 }
 
 android {
-    namespace = "com.fangga.bananaidentifier"
+    namespace = libs.plugins.main.namespace.get().toString()
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.fangga.bananaidentifier"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = libs.versions.versionCode.get().toInt()
@@ -43,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = libs.versions.kotlinCompiler.get()
     }
     packaging {
         resources {
@@ -87,8 +86,8 @@ dependencies {
     implementation(libs.coil)
 
     // Dagger - Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
-    implementation(libs.androidx.navigation.compose)
+    ksp(libs.hilt.compiler)
+    implementation(libs.hilt.core)
+
 
 }
