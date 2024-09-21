@@ -103,4 +103,5 @@ jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = 
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 main-namespace = { id = "com.fangga.bananaidentifier" }
 core-namespace = { id = "com.fangga.core" }
+navigation-namespace = { id = "com.fangga.navigation" }
 
