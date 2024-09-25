@@ -23,3 +23,6 @@ rootProject.name = "Banana Identifier"
 include(":app")
 include(":navigation")
 include(":core")
+include(":features:splash")
+include(":features:home")
+include(":features:onboard")

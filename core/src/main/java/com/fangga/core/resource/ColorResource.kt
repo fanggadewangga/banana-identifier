@@ -1,4 +1,4 @@
-package com.fangga.bananaidentifier.ui.theme
+package com.fangga.core.resource
 
 import androidx.compose.ui.graphics.Color
 

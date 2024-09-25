@@ -1,13 +1,12 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
 }
 
 android {
-    namespace = libs.plugins.main.namespace.get().toString()
+    namespace = libs.plugins.home.namespace.get().toString()
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -57,7 +56,4 @@ dependencies {
 
     // Coil
     implementation(libs.coil)
-
-    // Datastore
-    api(libs.androidx.datastore.preferences)
 }

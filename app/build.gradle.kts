@@ -56,6 +56,11 @@ dependencies {
     implementation(project(":navigation"))
     implementation(project(":core"))
 
+    // Features
+    implementation(project(":features:splash"))
+    implementation(project(":features:onboard"))
+    implementation(project(":features:home"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

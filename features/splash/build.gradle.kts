@@ -1,13 +1,12 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
 }
 
 android {
-    namespace = libs.plugins.main.namespace.get().toString()
+    namespace = libs.plugins.splash.namespace.get().toString()
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -33,6 +32,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.appcompat)
@@ -57,7 +57,5 @@ dependencies {
 
     // Coil
     implementation(libs.coil)
-
-    // Datastore
-    api(libs.androidx.datastore.preferences)
+    implementation(libs.coil.compose)
 }
