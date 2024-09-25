@@ -36,11 +36,12 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun navigateToHome() {
+        Log.d("SplashViewModel", "navigateToHome")
         navigator.navigateTo("home")
     }
 
     private fun navigateToOnboard() {
-        Log.d("Navigate To Onboard", "navigateToOnboard: called")
         navigator.navigateTo("onboard")
+        Log.d("SplashViewModel", "navigateToOnboard")
     }
 }

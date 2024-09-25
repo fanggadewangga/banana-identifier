@@ -109,4 +109,5 @@ main-namespace = { id = "com.fangga.bananaidentifier" }
 core-namespace = { id = "com.fangga.core" }
 navigation-namespace = { id = "com.fangga.navigation" }
 splash-namespace = { id = "com.fangga.features.splash" }
+onboard-namespace = { id = "com.fangga.features.onboard" }
 home-namespace = { id = "com.fangga.features.home" }
