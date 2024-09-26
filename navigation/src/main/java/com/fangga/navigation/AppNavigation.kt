@@ -1,6 +1,5 @@
 package com.fangga.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.compose.NavHost
@@ -27,20 +26,17 @@ fun AppNavigation(
 
     LaunchedEffect(Unit) {
         navigator.actions.collectLatest { action ->
-            when(action) {
+            when (action) {
                 Navigator.Action.Back -> navController.popBackStack()
-                is Navigator.Action.Navigate -> {
-                    Log.d("Navigate to", action.destination)
-                    navController.navigate(
-                        route = action.destination,
-                        builder = action.navOptions
-                    )
-                }
+                is Navigator.Action.Navigate -> navController.navigate(
+                    route = action.destination,
+                    builder = action.navOptions
+                )
             }
         }
     }
 
-    NavHost(navController = navController, startDestination = Destination.onboard.route) {
+    NavHost(navController = navController, startDestination = Destination.splash.route) {
 
         composable(Destination.splash.route) {
             splashScreen()

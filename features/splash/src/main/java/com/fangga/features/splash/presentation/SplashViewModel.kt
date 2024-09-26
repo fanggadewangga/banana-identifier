@@ -1,6 +1,5 @@
 package com.fangga.features.splash.presentation
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.fangga.core.datasource.datastore.UserDataStore
 import com.fangga.core.navigation.NavigationService
@@ -8,6 +7,7 @@ import com.fangga.core.presentation.BaseViewModel
 import com.fangga.features.splash.presentation.event.SplashUiEvent
 import com.fangga.features.splash.presentation.state.SplashUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,29 +19,45 @@ class SplashViewModel @Inject constructor(
 
     override suspend fun handleEvent(event: SplashUiEvent) {
         when (event) {
-            SplashUiEvent.CheckPassedOnboardStatus -> getPassedOnboardStatus()
-            SplashUiEvent.NavigateToHome -> navigateToHome()
-            SplashUiEvent.NavigateToOnboard -> navigateToOnboard()
+            is SplashUiEvent.CheckPassedOnboardStatus -> getPassedOnboardStatus()
+            is SplashUiEvent.NavigateToHome -> navigateToHome()
+            is SplashUiEvent.NavigateToOnboard -> navigateToOnboard()
         }
     }
 
     private fun getPassedOnboardStatus() {
         viewModelScope.launch {
             userDataStore.getPassedOnboardStatus().collect { hasPassed ->
-                updateUiState {
-                    copy(hasPassedOnboard = hasPassed)
-                }
+                updateUiState { copy(hasPassedOnboard = hasPassed) }
+                handleNavigation(hasPassed)
             }
         }
     }
 
     private fun navigateToHome() {
-        Log.d("SplashViewModel", "navigateToHome")
-        navigator.navigateTo("home")
+        navigator.navigateTo("home") {
+            popUpTo("splash") { inclusive = true }
+        }
     }
 
     private fun navigateToOnboard() {
-        navigator.navigateTo("onboard")
-        Log.d("SplashViewModel", "navigateToOnboard")
+        navigator.navigateTo("onboard") {
+            popUpTo("splash") { inclusive = true }
+        }
+    }
+
+    private fun handleNavigation(hasPassedOnboard: Boolean) {
+        viewModelScope.launch {
+            delay(2000L)
+            if (hasPassedOnboard) {
+                navigateToHome()
+            } else {
+                navigateToOnboard()
+            }
+        }
+    }
+
+    init {
+        getPassedOnboardStatus()
     }
 }

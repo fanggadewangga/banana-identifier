@@ -17,8 +17,8 @@ abstract class BaseViewModel<UiState, Event>(initialState: UiState) : ViewModel(
 
     init {
         viewModelScope.launch {
-            events.collect { events ->
-                handleEvent(events)
+            events.collect { event ->
+                handleEvent(event)
             }
         }
     }
