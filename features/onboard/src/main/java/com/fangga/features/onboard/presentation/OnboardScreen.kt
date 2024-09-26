@@ -13,9 +13,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,7 +28,7 @@ import com.fangga.core.resource.greenPrimary
 import com.fangga.features.onboard.domain.OnboardItem
 import com.fangga.features.onboard.presentation.components.OnboardIndicator
 import com.fangga.features.onboard.presentation.components.OnboardItem
-import kotlinx.coroutines.launch
+import com.fangga.features.onboard.presentation.event.OnboardEvent
 
 @Composable
 fun OnboardScreen(screenHeight: Int) {
@@ -43,7 +43,10 @@ fun OnboardScreen(screenHeight: Int) {
         initialPage = state.currentOnboardPage,
         pageCount = { pages.size }
     )
-    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(key1 = state.currentOnboardPage) {
+        pagerState.animateScrollToPage(state.currentOnboardPage)
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -54,8 +57,9 @@ fun OnboardScreen(screenHeight: Int) {
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.height((screenHeight * 0.78).dp)
-            ) {
-                OnboardItem(item = pages[it], screenHeight = screenHeight)
+            ) { page ->
+                viewModel.onEvent(OnboardEvent.OnPageChanged(page))
+                OnboardItem(item = pages[page], screenHeight = screenHeight)
             }
             OnboardIndicator(pagerState = pagerState)
         }
@@ -72,13 +76,14 @@ fun OnboardScreen(screenHeight: Int) {
                     text = "Lewati",
                     textStyle = bodyText14Regular,
                     color = greenPrimary,
-                    modifier = Modifier.clickable {
-                        coroutineScope.launch {
-                            pagerState.animateScrollToPage(pagerState.currentPage - 1)
-                        }
-                    })
+                    modifier = Modifier.clickable { viewModel.onEvent(OnboardEvent.SkipOnboard) })
             AppButton(
-                onClick = { coroutineScope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) } },
+                onClick = {
+                    if (state.isLastPage)
+                        viewModel.onEvent(OnboardEvent.OnStartClicked)
+                    else
+                        viewModel.onEvent(OnboardEvent.OnNextClicked)
+                },
                 contentPadding = PaddingValues(horizontal = 36.dp, vertical = 12.dp),
                 modifier = Modifier.then(
                     if (pagerState.currentPage == pages.size - 1) Modifier
@@ -87,7 +92,7 @@ fun OnboardScreen(screenHeight: Int) {
                 )
             ) {
                 AppText(
-                    text = if (pagerState.currentPage == pages.size - 1) "Mulai" else "Selanjutnya",
+                    text = if (state.isLastPage) "Mulai" else "Selanjutnya",
                     textStyle = bodyText14Regular,
                     color = Color.White
                 )
