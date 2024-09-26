@@ -25,39 +25,41 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    private fun getPassedOnboardStatus() {
-        viewModelScope.launch {
-            userDataStore.getPassedOnboardStatus().collect { hasPassed ->
-                updateUiState { copy(hasPassedOnboard = hasPassed) }
-                handleNavigation(hasPassed)
-            }
+    private suspend fun getPassedOnboardStatus() {
+        userDataStore.getPassedOnboardStatus().collect { hasPassed ->
+            updateUiState { copy(hasPassedOnboard = hasPassed) }
+            handleNavigation(hasPassed)
         }
     }
 
     private fun navigateToHome() {
-        navigator.navigateTo("home") {
-            popUpTo("splash") { inclusive = true }
-        }
-    }
-
-    private fun navigateToOnboard() {
-        navigator.navigateTo("onboard") {
-            popUpTo("splash") { inclusive = true }
-        }
-    }
-
-    private fun handleNavigation(hasPassedOnboard: Boolean) {
         viewModelScope.launch {
-            delay(2000L)
-            if (hasPassedOnboard) {
-                navigateToHome()
-            } else {
-                navigateToOnboard()
+            navigator.navigateTo("home") {
+                popUpTo("splash") { inclusive = true }
             }
         }
     }
 
+    private fun navigateToOnboard() {
+        viewModelScope.launch {
+            navigator.navigateTo("onboard") {
+                popUpTo("splash") { inclusive = true }
+            }
+        }
+    }
+
+    private suspend fun handleNavigation(hasPassedOnboard: Boolean) {
+        delay(2000L)
+        if (hasPassedOnboard) {
+            navigateToHome()
+        } else {
+            navigateToOnboard()
+        }
+    }
+
     init {
-        getPassedOnboardStatus()
+        viewModelScope.launch {
+            getPassedOnboardStatus()
+        }
     }
 }
