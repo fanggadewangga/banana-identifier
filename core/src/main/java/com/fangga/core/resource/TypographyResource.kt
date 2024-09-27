@@ -266,3 +266,9 @@ val bodyText10Regular = TextStyle(
     fontWeight = FontWeight.Normal,
     letterSpacing = 0.sp
 )
+
+val h8Medium = TextStyle(
+    fontSize = 12.sp,
+    fontFamily = poppins,
+    fontWeight = FontWeight(500),
+)

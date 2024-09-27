@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.ui.platform.LocalConfiguration
+import com.fangga.features.home.presentation.HomeScreen
 import com.fangga.features.onboard.presentation.OnboardScreen
 import com.fangga.features.splash.presentation.SplashScreen
 import com.fangga.navigation.AppNavigation
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
                 navigator = navigator,
                 splashScreen = { SplashScreen(screenWidth) },
                 onboardScreen = { OnboardScreen(screenHeight) },
-                homeScreen = { /*TODO*/ },
+                homeScreen = { HomeScreen(screenHeight, screenWidth) },
                 tipsDetailScreen = { /*TODO*/ },
                 privacyAndPolicyScreen = { /*TODO*/ },
                 termsAndConditionScreen = { /*TODO*/ },

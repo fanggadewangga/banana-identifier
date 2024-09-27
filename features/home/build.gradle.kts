@@ -32,6 +32,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.appcompat)
@@ -56,4 +57,5 @@ dependencies {
 
     // Coil
     implementation(libs.coil)
+    implementation(libs.coil.compose)
 }
