@@ -19,6 +19,10 @@ class HomeViewModel @Inject constructor(
         updateUiState { copy(tipsData = Static.tipsAndRecommendation) }
     }
 
+    private fun loadAboutData() {
+        updateUiState { copy(aboutData = Static.aboutApp) }
+    }
+
     private fun loadLatestResult() {
 
     }
@@ -39,14 +43,23 @@ class HomeViewModel @Inject constructor(
 
     }
 
+    private fun handleAboutAppClicked(aboutId: String) {
+        when (aboutId) {
+            // TODO : Handle navigation
+            "privacy_policy" -> {}
+            "terms_and_conditions" -> {}
+            "rating" -> {}
+        }
+    }
+
     override suspend fun handleEvent(event: HomeEvent) {
         when (event) {
             HomeEvent.LoadLatestResult -> loadLatestResult()
-            HomeEvent.LoadTipsAndRecommendation -> loadTipsData()
+            HomeEvent.OnScanShortcutClicked -> handleScanShortcutClick()
             is HomeEvent.OnLatestResultClicked -> handleLatestResultClick(event.resultId)
             is HomeEvent.OnLatestResultSwiped -> handleLatestResultSwiped(event.resultId)
-            HomeEvent.OnScanShortcutClicked -> handleScanShortcutClick()
             is HomeEvent.OnTipsItemClicked -> handleTipsItemClicked(event.tipsId)
+            is HomeEvent.OnAboutAppClicked -> handleAboutAppClicked(event.aboutId)
         }
     }
 }

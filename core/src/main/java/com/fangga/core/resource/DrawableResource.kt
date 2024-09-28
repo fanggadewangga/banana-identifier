@@ -13,3 +13,7 @@ val scanShortcut = R.drawable.img_scan_shortcut
 val scanIcon = R.drawable.ic_scan
 val scanTips = R.drawable.img_scan_tips
 val ripenessTips = R.drawable.img_ripeness
+val privacyIcon = R.drawable.ic_about_privacy
+val termsIcon = R.drawable.ic_about_terms
+val ratingIcon = R.drawable.ic_about_rating
+val dummyResultImage = R.drawable.img_banana

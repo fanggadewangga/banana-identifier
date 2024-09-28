@@ -17,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fangga.core.components.common.AppText
 import com.fangga.core.resource.h10Bold
+import com.fangga.features.home.presentation.components.AboutApp
 import com.fangga.features.home.presentation.components.HomeBackground
 import com.fangga.features.home.presentation.components.ScanShortcut
 import com.fangga.features.home.presentation.components.TipsAndRecommendation
@@ -29,7 +30,6 @@ fun HomeScreen(screenHeight: Int, screenWidth: Int) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        viewModel.onEvent(HomeEvent.LoadTipsAndRecommendation)
         viewModel.onEvent(HomeEvent.LoadLatestResult)
     }
 
@@ -59,7 +59,20 @@ fun HomeScreen(screenHeight: Int, screenWidth: Int) {
                     tipsData = state.tipsData,
                     screenWidth = screenWidth,
                     screenHeight = screenHeight,
-                    onTipsItemClicked = { tipsId -> viewModel.onEvent(HomeEvent.OnTipsItemClicked(tipsId)) }
+                    onTipsItemClicked = { tipsId ->
+                        viewModel.onEvent(
+                            HomeEvent.OnTipsItemClicked(
+                                tipsId
+                            )
+                        )
+                    }
+                )
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(24.dp))
+                AboutApp(
+                    onClicked = { viewModel.onEvent(HomeEvent.OnAboutAppClicked(it)) }
                 )
             }
         }
