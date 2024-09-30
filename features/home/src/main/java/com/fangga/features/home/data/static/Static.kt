@@ -49,6 +49,7 @@ object Static {
         resultId = "1",
         bananaType = BananaType.MOROSEBO,
         ripenessType = RipenessType.ALAMI,
+        isActionRevealed = false,
         timestamp = "13 September 2024, 13:00"
     )
 }

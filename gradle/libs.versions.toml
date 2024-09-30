@@ -28,7 +28,8 @@ lifecycleRuntimeKtx = "2.8.6"
 composeActivity = "1.9.2"
 composeBom = "2024.09.02"
 composeHiltNavigation = "1.2.0"
-composeNavigation  = "2.8.1"
+composeNavigation = "2.8.1"
+composeFoundation = "1.7.2"
 
 # Coroutines
 coroutines = "1.9.0"
@@ -48,6 +49,9 @@ materialVersion = "1.12.0"
 
 # Datastore
 datastore = "1.1.1"
+
+# Reveal Swipe
+composeMaterial = "1.4.0"
 
 [libraries]
 # Android configs
@@ -71,6 +75,7 @@ androidx-datastore-preferences = { module = "androidx.datastore:datastore-prefer
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
+compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeFoundation" }
 
 # Coroutines
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
@@ -96,6 +101,8 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
+
+androidx-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "composeMaterial" }
 
 
 [plugins]

@@ -59,3 +59,6 @@ val tosca40 = Color(0xFFA2D0CF)
 val tosca30 = Color(0xFFBADCDB)
 val tosca20 = Color(0xFFD0E7E6)
 val tosca10 = Color(0xFFE6F2F1)
+
+// Others
+val deleteActionBackground = Color(0xFFFFD8E4)

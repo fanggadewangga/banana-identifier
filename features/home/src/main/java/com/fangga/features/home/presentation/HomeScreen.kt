@@ -1,11 +1,13 @@
 package com.fangga.features.home.presentation
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,9 +18,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fangga.core.components.common.AppText
+import com.fangga.core.model.enums.ResultItemSwipeType
 import com.fangga.core.resource.h10Bold
 import com.fangga.features.home.presentation.components.AboutApp
 import com.fangga.features.home.presentation.components.HomeBackground
+import com.fangga.features.home.presentation.components.LatestResult
 import com.fangga.features.home.presentation.components.ScanShortcut
 import com.fangga.features.home.presentation.components.TipsAndRecommendation
 import com.fangga.features.home.presentation.event.HomeEvent
@@ -49,8 +53,22 @@ fun HomeScreen(screenHeight: Int, screenWidth: Int) {
             }
 
             item {
-                Spacer(modifier = Modifier.height(24.dp))
-                ScanShortcut(onClick = { /*TODO*/ })
+                if (state.latestResult != null)
+                    LatestResult(
+                        data = state.latestResult!!,
+                        swipeType = ResultItemSwipeType.SAVE,
+                        screenHeight = screenHeight,
+                        screenWidth = screenWidth,
+                        onItemClicked = {
+                            Log.d("HomeScreen", "onItemClicked: $it")
+                        },
+                        onActionClicked = {
+                            Log.d("HomeScreen", "onActionClicked: $it")
+                        },
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                else
+                    ScanShortcut(onClick = { /*TODO*/ }, modifier = Modifier.padding(top = 24.dp))
             }
 
             item {
