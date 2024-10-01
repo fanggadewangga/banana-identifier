@@ -60,6 +60,8 @@ dependencies {
     implementation(project(":features:splash"))
     implementation(project(":features:onboard"))
     implementation(project(":features:home"))
+    implementation(project(":features:privacypolicy"))
+    implementation(project(":features:termscondition"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

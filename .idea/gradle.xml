@@ -14,7 +14,9 @@
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/home" />
             <option value="$PROJECT_DIR$/features/onboard" />
+            <option value="$PROJECT_DIR$/features/privacypolicy" />
             <option value="$PROJECT_DIR$/features/splash" />
+            <option value="$PROJECT_DIR$/features/termscondition" />
             <option value="$PROJECT_DIR$/navigation" />
           </set>
         </option>

@@ -45,9 +45,9 @@ class HomeViewModel @Inject constructor(
 
     private fun handleAboutAppClicked(aboutId: String) {
         when (aboutId) {
-            // TODO : Handle navigation
-            "privacy_policy" -> {}
-            "terms_and_conditions" -> {}
+            // TODO : Handle Rating Navigation
+            "privacy_policy" -> navigationService.navigateTo("privacy_and_policy")
+            "terms_and_conditions" -> navigationService.navigateTo("terms_and_conditions")
             "rating" -> {}
         }
     }

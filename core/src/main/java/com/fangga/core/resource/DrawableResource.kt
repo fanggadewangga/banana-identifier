@@ -17,3 +17,4 @@ val privacyIcon = R.drawable.ic_about_privacy
 val termsIcon = R.drawable.ic_about_terms
 val ratingIcon = R.drawable.ic_about_rating
 val dummyResultImage = R.drawable.img_banana
+val backIcon = R.drawable.ic_back

@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.ui.platform.LocalConfiguration
+import com.fangga.about.presentation.PrivacyPolicyScreen
 import com.fangga.features.home.presentation.HomeScreen
 import com.fangga.features.onboard.presentation.OnboardScreen
 import com.fangga.features.splash.presentation.SplashScreen
@@ -31,7 +32,7 @@ class MainActivity : ComponentActivity() {
                 onboardScreen = { OnboardScreen(screenHeight) },
                 homeScreen = { HomeScreen(screenHeight, screenWidth) },
                 tipsDetailScreen = { /*TODO*/ },
-                privacyAndPolicyScreen = { /*TODO*/ },
+                privacyAndPolicyScreen = { PrivacyPolicyScreen(screenWidth, screenHeight) },
                 termsAndConditionScreen = { /*TODO*/ },
                 scanCameraScreen = { /*TODO*/ },
                 scanResultScreen = { /*TODO*/ }) {
