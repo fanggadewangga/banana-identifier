@@ -1,4 +1,4 @@
-package com.fangga.about.presentation.components
+package com.fangga.core.components.feature
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

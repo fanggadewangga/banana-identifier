@@ -1,4 +1,4 @@
-package com.fangga.about.presentation.components
+package com.fangga.termscondition.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,7 +16,7 @@ import com.fangga.core.resource.bodyText12Medium
 import com.fangga.core.resource.bodyText12Regular
 
 @Composable
-fun PrivacyAndPolicyContent(modifier: Modifier = Modifier) {
+fun TermsConditionContent(modifier: Modifier = Modifier) {
     LazyColumn(
         contentPadding = PaddingValues(horizontal = 16.dp),
         modifier = modifier
@@ -28,7 +28,7 @@ fun PrivacyAndPolicyContent(modifier: Modifier = Modifier) {
                 title = "Pengantar",
                 content = {
                     AppText(
-                        text = "Kami sangat menghargai privasi Anda. Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi informasi pribadi Anda ketika Anda menggunakan aplikasi kami. Dengan menggunakan aplikasi kami, Anda setuju dengan pengumpulan dan penggunaan informasi sesuai dengan kebijakan ini.",
+                        text = "Syarat dan Ketentuan ini mengatur penggunaan aplikasi kami. Dengan mengakses atau menggunakan aplikasi kami, Anda setuju untuk mematuhi syarat dan ketentuan ini. Jika Anda tidak setuju dengan syarat dan ketentuan ini, harap jangan gunakan aplikasi kami.",
                         textStyle = bodyText12Regular
                     )
                 },
@@ -41,35 +41,32 @@ fun PrivacyAndPolicyContent(modifier: Modifier = Modifier) {
         item {
             PointItem(
                 number = "2",
-                title = "Informasi yang Kami Kumpulkan",
+                title = "Penggunaan Aplikasi",
                 content = {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(2.dp)
-                    ) {
+                    AppText(
+                        text = "Anda setuju untuk menggunakan aplikasi kami hanya untuk tujuan yang sah dan sesuai dengan hukum yang berlaku. Anda tidak boleh menggunakan aplikasi kami untuk:",
+                        textStyle = bodyText12Regular
+                    )
+                    Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
                         AppText(text = "•")
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(4.dp),
-                        ) {
-                            AppText(text = "Informasi Penggunaan", textStyle = bodyText12Medium)
-                            AppText(
-                                text = "Data tentang bagaimana Anda menggunakan aplikasi, termasuk fitur yang digunakan dan waktu penggunaan.",
-                                textStyle = bodyText12Regular
-                            )
-                        }
+                        AppText(
+                            text = "Melanggar hak kekayaan intelektual orang lain.",
+                            textStyle = bodyText12Regular
+                        )
                     }
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(2.dp)
-                    ) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
                         AppText(text = "•")
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(4.dp),
-                        ) {
-                            AppText(text = "Informasi Teknologi", textStyle = bodyText12Medium)
-                            AppText(
-                                text = "Alamat IP, jenis perangkat, sistem operasi, dan informasi teknis lainnya.",
-                                textStyle = bodyText12Regular
-                            )
-                        }
+                        AppText(
+                            text = "Mengirimkan konten yang tidak sah, menyesatkan, atau berbahaya.",
+                            textStyle = bodyText12Regular
+                        )
+                    }
+                    Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+                        AppText(text = "•")
+                        AppText(
+                            text = "Mengganggu atau merusak aplikasi atau server kami.",
+                            textStyle = bodyText12Regular
+                        )
                     }
                 },
                 modifier = Modifier
@@ -81,33 +78,12 @@ fun PrivacyAndPolicyContent(modifier: Modifier = Modifier) {
         item {
             PointItem(
                 number = "3",
-                title = "Penggunaan Informasi",
+                title = "Hak Kekayaan Intelektual",
                 content = {
                     AppText(
-                        text = "Kami menggunakan informasi yang kami kumpulkan untuk:",
+                        text = "Semua konten dan materi di aplikasi kami, termasuk tetapi tidak terbatas pada teks, grafik, logo, dan perangkat lunak, adalah milik kami atau pihak ketiga yang memberikan lisensi kepada kami. Anda tidak diperbolehkan untuk menyalin, mendistribusikan, atau menggunakan materi tersebut tanpa izin tertulis dari kami.",
                         textStyle = bodyText12Regular
                     )
-                    Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
-                        AppText(text = "•")
-                        AppText(
-                            text = "Menyediakan dan meningkatkan layanan kami.",
-                            textStyle = bodyText12Regular
-                        )
-                    }
-                    Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
-                        AppText(text = "•")
-                        AppText(
-                            text = "Memperbaiki pengalaman pengguna dan menyesuaikan konten.",
-                            textStyle = bodyText12Regular
-                        )
-                    }
-                    Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
-                        AppText(text = "•")
-                        AppText(
-                            text = "Menanggapi pertanyaan dan dukungan pengguna.",
-                            textStyle = bodyText12Regular
-                        )
-                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -118,10 +94,10 @@ fun PrivacyAndPolicyContent(modifier: Modifier = Modifier) {
         item {
             PointItem(
                 number = "4",
-                title = "Perlindungan Informasi",
+                title = "Pembatasan Tanggung Jawab",
                 content = {
                     AppText(
-                        text = "Kami mengambil langkah-langkah keamanan yang wajar untuk melindungi informasi pribadi Anda dari akses, perubahan, pengungkapan, atau penghancuran yang tidak sah. Namun, tidak ada metode pengiriman data melalui internet atau metode penyimpanan elektronik yang 100% aman",
+                        text = "Kami tidak bertanggung jawab atas kerugian atau kerusakan yang timbul dari penggunaan aplikasi kami, termasuk tetapi tidak terbatas pada kerusakan langsung, tidak langsung, insidental, atau konsekuensial. Kami tidak menjamin bahwa aplikasi kami akan selalu tersedia atau bebas dari kesalahan.",
                         textStyle = bodyText12Regular
                     )
                 },
@@ -134,10 +110,10 @@ fun PrivacyAndPolicyContent(modifier: Modifier = Modifier) {
         item {
             PointItem(
                 number = "5",
-                title = "Pengungkapan kepada Pihak Ketiga",
+                title = "Perubahan pada Syarat dan Ketentuan",
                 content = {
                     AppText(
-                        text = "Kami tidak akan menjual, menyewa, atau membagikan informasi pribadi Anda kepada pihak ketiga tanpa izin Anda, kecuali jika diwajibkan oleh hukum atau dalam hal ada kebutuhan untuk menjalankan layanan kami.",
+                        text = "Kami dapat memperbarui Syarat dan Ketentuan ini dari waktu ke waktu. Perubahan akan diposting di aplikasi kami, dan penggunaan Anda yang berkelanjutan terhadap aplikasi setelah perubahan tersebut menunjukkan penerimaan Anda terhadap syarat dan ketentuan yang diperbarui.",
                         textStyle = bodyText12Regular
                     )
                 },
@@ -150,38 +126,6 @@ fun PrivacyAndPolicyContent(modifier: Modifier = Modifier) {
         item {
             PointItem(
                 number = "6",
-                title = "Hak Anda",
-                content = {
-                    AppText(
-                        text = "Anda memiliki hak untuk mengakses, memperbarui, atau menghapus informasi pribadi Anda yang kami miliki. Untuk melakukannya, Anda dapat menghubungi kami melalui informasi kontak yang tertera di bawah.",
-                        textStyle = bodyText12Regular
-                    )
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 12.dp)
-            )
-        }
-
-        item {
-            PointItem(
-                number = "7",
-                title = "Perubahan pada Kebijakan Privasi",
-                content = {
-                    AppText(
-                        text = "Kami dapat memperbarui Kebijakan Privasi ini dari waktu ke waktu. Kami akan memberi tahu Anda tentang perubahan tersebut dengan memposting kebijakan baru di aplikasi kami. Anda diharapkan untuk memeriksa kebijakan ini secara berkala.",
-                        textStyle = bodyText12Regular
-                    )
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 12.dp)
-            )
-        }
-
-        item {
-            PointItem(
-                number = "8",
                 title = "Kontak Kami",
                 content = {
                     AppText(

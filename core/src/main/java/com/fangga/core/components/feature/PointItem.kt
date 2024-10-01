@@ -1,4 +1,4 @@
-package com.fangga.about.presentation.components
+package com.fangga.core.components.feature
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

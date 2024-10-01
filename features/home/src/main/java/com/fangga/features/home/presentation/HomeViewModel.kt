@@ -47,7 +47,7 @@ class HomeViewModel @Inject constructor(
         when (aboutId) {
             // TODO : Handle Rating Navigation
             "privacy_policy" -> navigationService.navigateTo("privacy_and_policy")
-            "terms_and_conditions" -> navigationService.navigateTo("terms_and_conditions")
+            "terms_and_conditions" -> navigationService.navigateTo("terms_and_condition")
             "rating" -> {}
         }
     }
