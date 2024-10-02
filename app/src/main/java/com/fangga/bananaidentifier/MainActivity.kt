@@ -12,6 +12,7 @@ import com.fangga.features.splash.presentation.SplashScreen
 import com.fangga.navigation.AppNavigation
 import com.fangga.navigation.Navigator
 import com.fangga.termscondition.TermsConditionScreen
+import com.fangga.tips.presentation.TipsDetailScreen
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -32,7 +33,13 @@ class MainActivity : ComponentActivity() {
                 splashScreen = { SplashScreen(screenWidth) },
                 onboardScreen = { OnboardScreen(screenHeight) },
                 homeScreen = { HomeScreen(screenHeight, screenWidth) },
-                tipsDetailScreen = { /*TODO*/ },
+                tipsDetailScreen = { id ->
+                    TipsDetailScreen(
+                        tipsId = id,
+                        screenWidth = screenWidth,
+                        screenHeight = screenHeight
+                    )
+                },
                 privacyAndPolicyScreen = { PrivacyPolicyScreen(screenWidth, screenHeight) },
                 termsAndConditionScreen = { TermsConditionScreen(screenWidth, screenHeight) },
                 scanCameraScreen = { /*TODO*/ },

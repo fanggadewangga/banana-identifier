@@ -120,3 +120,4 @@ onboard-namespace = { id = "com.fangga.features.onboard" }
 home-namespace = { id = "com.fangga.features.home" }
 privacypolicy-namespace = { id = "com.fangga.features.privacypolicy" }
 termscondition-namespace = { id = "com.fangga.features.termscondition" }
+tips-namespace = { id = "com.fangga.features.name" }

@@ -49,7 +49,7 @@ val darkYellowActive = Color(0xFF71491B)
 val darkerYellow = Color(0xFF583915)
 
 // Tosca Variations
-val tosca100 = Color(0xFF209390)
+val tosca100 = Color(0xFF209491)
 val tosca90 = Color(0xFF379D9A)
 val tosca80 = Color(0xFF4BA3A1)
 val tosca70 = Color(0xFF61B3B0)

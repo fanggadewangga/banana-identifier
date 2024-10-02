@@ -39,8 +39,11 @@ class HomeViewModel @Inject constructor(
 
     }
 
-    private fun handleTipsItemClicked(resultId: String) {
-
+    private fun handleTipsItemClicked(tipsId: String) {
+        navigationService.navigateTo("tips/${tipsId}") {
+            launchSingleTop = true
+            restoreState = true
+        }
     }
 
     private fun handleAboutAppClicked(aboutId: String) {
