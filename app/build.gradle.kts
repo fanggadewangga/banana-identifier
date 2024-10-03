@@ -63,6 +63,7 @@ dependencies {
     implementation(project(":features:privacypolicy"))
     implementation(project(":features:termscondition"))
     implementation(project(":features:tips"))
+    implementation(project(":features:savedresult"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

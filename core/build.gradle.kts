@@ -45,8 +45,8 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.material3)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.material)
 
     // DI
     implementation(libs.hilt.core)
