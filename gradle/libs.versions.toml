@@ -3,7 +3,7 @@
 # Android configs
 targetSdk = "34"
 compileSdk = "34"
-minSdk = "24"
+minSdk = "25"
 versionCode = "1"
 versionName = "1.0"
 appcompat = "1.7.0"
@@ -28,7 +28,7 @@ lifecycleRuntimeKtx = "2.8.6"
 composeActivity = "1.9.2"
 composeBom = "2024.09.02"
 composeHiltNavigation = "1.2.0"
-composeNavigation = "2.8.1"
+composeNavigation = "2.8.2"
 composeFoundation = "1.7.2"
 
 # Coroutines
@@ -76,6 +76,7 @@ androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
 compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeFoundation" }
+androidx-compose-material = { group = "androidx.compose.material", name = "material", version = "composeMaterial" }
 
 # Coroutines
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
@@ -102,9 +103,6 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
 
-androidx-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "composeMaterial" }
-
-
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
@@ -121,3 +119,4 @@ home-namespace = { id = "com.fangga.features.home" }
 privacypolicy-namespace = { id = "com.fangga.features.privacypolicy" }
 termscondition-namespace = { id = "com.fangga.features.termscondition" }
 tips-namespace = { id = "com.fangga.features.name" }
+saved-result-namespace = { id = "com.fangga.features.savedresult" }

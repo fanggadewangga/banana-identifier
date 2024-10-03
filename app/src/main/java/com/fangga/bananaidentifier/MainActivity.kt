@@ -11,6 +11,7 @@ import com.fangga.features.onboard.presentation.OnboardScreen
 import com.fangga.features.splash.presentation.SplashScreen
 import com.fangga.navigation.AppNavigation
 import com.fangga.navigation.Navigator
+import com.fangga.savedresult.presentation.SavedResultScreen
 import com.fangga.termscondition.TermsConditionScreen
 import com.fangga.tips.presentation.TipsDetailScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +31,7 @@ class MainActivity : ComponentActivity() {
             val screenHeight = LocalConfiguration.current.screenHeightDp
             AppNavigation(
                 navigator = navigator,
+                screenHeight = screenHeight,
                 splashScreen = { SplashScreen(screenWidth) },
                 onboardScreen = { OnboardScreen(screenHeight) },
                 homeScreen = { HomeScreen(screenHeight, screenWidth) },
@@ -43,8 +45,9 @@ class MainActivity : ComponentActivity() {
                 privacyAndPolicyScreen = { PrivacyPolicyScreen(screenWidth, screenHeight) },
                 termsAndConditionScreen = { TermsConditionScreen(screenWidth, screenHeight) },
                 scanCameraScreen = { /*TODO*/ },
-                scanResultScreen = { /*TODO*/ }) {
-            }
+                scanResultScreen = { /*TODO*/ },
+                savedResultScreen = { SavedResultScreen(screenHeight) }
+            )
         }
     }
 }
