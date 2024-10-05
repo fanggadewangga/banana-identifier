@@ -1,5 +1,6 @@
 package com.fangga.features.home.presentation
 
+import android.util.Log
 import com.fangga.core.datasource.datastore.UserDataStore
 import com.fangga.core.navigation.NavigationService
 import com.fangga.core.presentation.BaseViewModel
@@ -32,6 +33,8 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun handleLatestResultClick(resultId: String) {
+        navigationService.navigateTo("saved_result")
+        Log.d("HomeViewModel", "handleLatestResultClick: $resultId")
 
     }
 

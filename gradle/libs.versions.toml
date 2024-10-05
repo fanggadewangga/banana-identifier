@@ -120,3 +120,4 @@ privacypolicy-namespace = { id = "com.fangga.features.privacypolicy" }
 termscondition-namespace = { id = "com.fangga.features.termscondition" }
 tips-namespace = { id = "com.fangga.features.name" }
 saved-result-namespace = { id = "com.fangga.features.savedresult" }
+result-namespace = { id = "com.fangga.features.result" }

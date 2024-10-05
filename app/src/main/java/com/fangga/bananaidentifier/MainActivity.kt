@@ -11,6 +11,7 @@ import com.fangga.features.onboard.presentation.OnboardScreen
 import com.fangga.features.splash.presentation.SplashScreen
 import com.fangga.navigation.AppNavigation
 import com.fangga.navigation.Navigator
+import com.fangga.result.presentation.ResultScreen
 import com.fangga.savedresult.presentation.SavedResultScreen
 import com.fangga.termscondition.TermsConditionScreen
 import com.fangga.tips.presentation.TipsDetailScreen
@@ -45,7 +46,7 @@ class MainActivity : ComponentActivity() {
                 privacyAndPolicyScreen = { PrivacyPolicyScreen(screenWidth, screenHeight) },
                 termsAndConditionScreen = { TermsConditionScreen(screenWidth, screenHeight) },
                 scanCameraScreen = { /*TODO*/ },
-                scanResultScreen = { /*TODO*/ },
+                scanResultScreen = { ResultScreen(isNewResult = true, screenWidth = screenWidth) },
                 savedResultScreen = { SavedResultScreen(screenHeight) }
             )
         }

@@ -35,3 +35,6 @@ val homeUnselectedIcon = R.drawable.ic_home_unselected
 val homeSelectedIcon = R.drawable.ic_home_selected
 val savedUnselectedIcon = R.drawable.ic_saved_unselected
 val savedSelectedIcon = R.drawable.ic_saved_selected
+val bananaTypeIndicator = R.drawable.ic_banana_type_indicator
+val ripenessTypeIndicator = R.drawable.ic_ripeness_type_indicator
+val resultImageDummy = R.drawable.img_result_image_dummy

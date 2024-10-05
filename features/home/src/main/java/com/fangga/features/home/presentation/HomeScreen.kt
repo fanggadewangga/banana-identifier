@@ -60,7 +60,7 @@ fun HomeScreen(screenHeight: Int, screenWidth: Int) {
                         screenHeight = screenHeight,
                         screenWidth = screenWidth,
                         onItemClicked = {
-                            Log.d("HomeScreen", "onItemClicked: $it")
+                            viewModel.onEvent(HomeEvent.OnLatestResultClicked(state.latestResult!!.resultId))
                         },
                         onActionClicked = {
                             Log.d("HomeScreen", "onActionClicked: $it")

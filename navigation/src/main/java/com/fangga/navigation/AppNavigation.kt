@@ -85,7 +85,7 @@ fun AppNavigation(
                     shape = CircleShape,
                     backgroundColor = greenPrimary,
                     modifier = Modifier.size(64.dp),
-                    onClick = singleClick { navController.navigate(Destination.scanCamera.route) }
+                    onClick = singleClick { navController.navigate(Destination.scanResult.route) }
                 ) {
                     AppImage(
                         imageUrl = cameraShutterIcon,
