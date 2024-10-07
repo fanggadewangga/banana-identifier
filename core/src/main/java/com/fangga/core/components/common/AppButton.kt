@@ -2,7 +2,6 @@ package com.fangga.core.components.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -21,6 +20,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.fangga.core.resource.greenPrimary
+import com.fangga.core.utils.noRippleClickable
 
 @Composable
 fun AppButton(
@@ -66,10 +66,7 @@ fun AppButton(
             modifier = modifier
                 .clip(shape)
                 .size(width = contentWidth.value, height = contentHeight.value)
-                .clickable(
-                    enabled = enabled,
-                    onClick = onClick
-                )
+                .noRippleClickable(enabled, onClick)
         )
     }
 }
