@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
                 privacyAndPolicyScreen = { PrivacyPolicyScreen(screenWidth, screenHeight) },
                 termsAndConditionScreen = { TermsConditionScreen(screenWidth, screenHeight) },
                 scanCameraScreen = { /*TODO*/ },
-                scanResultScreen = { ResultScreen(isNewResult = true, screenWidth = screenWidth) },
+                scanResultScreen = { ResultScreen(screenWidth = screenWidth) },
                 savedResultScreen = { SavedResultScreen(screenHeight) }
             )
         }

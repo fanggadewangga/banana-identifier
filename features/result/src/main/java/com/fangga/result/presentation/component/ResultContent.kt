@@ -1,5 +1,9 @@
 package com.fangga.result.presentation.component
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -29,11 +33,14 @@ fun ResultContent(
     result: Result,
     isNewResult: Boolean,
     isShowBottomSheet: Boolean,
+    isShowDeletionConfirmation: Boolean,
     onRepeatScan: () -> Unit,
     onSaveResult: () -> Unit,
     onDeleteSavedResult: () -> Unit,
     onBackClick: () -> Unit,
     onDismiss: () -> Unit,
+    onCancelDelete: () -> Unit,
+    onShowDeletionConfirmation: () -> Unit,
 ) {
 
     val sheetState = rememberModalBottomSheetState()
@@ -69,15 +76,31 @@ fun ResultContent(
                 },
                 modifier = Modifier.wrapContentSize()
             ) {
-                IdentificationResult(
-                    isNewResult = isNewResult,
-                    screenWidth = screenWidth,
-                    result = result,
-                    onRepeatScan = { onRepeatScan() },
-                    onSaveResult = { onSaveResult() },
-                    onDeleteSavedResult = { onDeleteSavedResult() },
-                    modifier = Modifier.padding(24.dp)
-                )
+                AnimatedVisibility(
+                    visible = isShowDeletionConfirmation,
+                    enter = fadeIn(animationSpec = snap()) + slideInVertically(animationSpec = snap()),
+                ) {
+                    DeletionConfirmation(
+                        screenWidth = screenWidth,
+                        bananaType = result.bananaType,
+                        onCancelClicked = { onCancelDelete() },
+                        onDeleteClicked = { onDeleteSavedResult() }
+                    )
+                }
+                AnimatedVisibility(
+                    visible = !isShowDeletionConfirmation,
+                    enter = fadeIn(animationSpec = snap()) + slideInVertically(animationSpec = snap()),
+                ) {
+                    IdentificationResult(
+                        isNewResult = isNewResult,
+                        screenWidth = screenWidth,
+                        result = result,
+                        onRepeatScan = { onRepeatScan() },
+                        onSaveResult = { onSaveResult() },
+                        onShowDeletionConfirmation = { onShowDeletionConfirmation() },
+                        modifier = Modifier.padding(24.dp)
+                    )
+                }
             }
         }
     }

@@ -35,7 +35,7 @@ fun IdentificationActionButtons(
                 borderColor = greenPrimary,
                 onClick = { onRepeatScan() },
                 borderWidth = 1.3.dp,
-                modifier = Modifier.width(( screenWidth * 0.4 ).dp)
+                modifier = Modifier.width((screenWidth * 0.4).dp)
             ) {
                 AppText(text = "Scan Ulang", textStyle = bodyText14Regular, color = greenPrimary)
             }
@@ -44,7 +44,7 @@ fun IdentificationActionButtons(
                 borderColor = greenPrimary,
                 onClick = { onSaveResult() },
                 borderWidth = 1.3.dp,
-                modifier = Modifier.width(( screenWidth * 0.4 ).dp)
+                modifier = Modifier.width((screenWidth * 0.4).dp)
             ) {
                 AppText(text = "Simpan", textStyle = bodyText14Regular, color = greenPrimary)
             }
@@ -53,6 +53,7 @@ fun IdentificationActionButtons(
         AppButton(
             backgroundColor = Color.White,
             borderColor = redMainDanger,
+            borderWidth = 1.3.dp,
             onClick = { onDeleteSavedResult() },
             modifier = Modifier.fillMaxWidth()
         ) {

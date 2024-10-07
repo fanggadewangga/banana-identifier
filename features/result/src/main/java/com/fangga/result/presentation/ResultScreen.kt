@@ -29,12 +29,17 @@ fun ResultScreen(
         result = scanResult,
         screenWidth = screenWidth,
         isNewResult = isNewResult,
+        isShowDeletionConfirmation = state.isShowDeletionConfirmation,
         isShowBottomSheet = state.isShowModal,
         onRepeatScan = { viewModel.onEvent(ResultEvent.RepeatScan) },
         onSaveResult = { viewModel.onEvent(ResultEvent.SaveResult(scanResult)) },
         onDeleteSavedResult = { viewModel.onEvent(ResultEvent.DeleteSavedResult(scanResult.resultId)) },
         onBackClick = { viewModel.onEvent(ResultEvent.NavigateBack) },
         onDismiss = { viewModel.onEvent(ResultEvent.ShowModal(false)) },
-        modifier = Modifier.fillMaxSize().background(color = Color.Red)
+        onCancelDelete = { viewModel.onEvent(ResultEvent.ShowDeletionConfirmation(false)) },
+        onShowDeletionConfirmation = { viewModel.onEvent(ResultEvent.ShowDeletionConfirmation(true)) },
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.Red)
     )
 }

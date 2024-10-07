@@ -38,3 +38,4 @@ val savedSelectedIcon = R.drawable.ic_saved_selected
 val bananaTypeIndicator = R.drawable.ic_banana_type_indicator
 val ripenessTypeIndicator = R.drawable.ic_ripeness_type_indicator
 val resultImageDummy = R.drawable.img_result_image_dummy
+val deleteConfirmationImage = R.drawable.img_delete_confirmation

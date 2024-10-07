@@ -23,7 +23,7 @@ fun IdentificationResult(
     result: Result,
     onRepeatScan: () -> Unit,
     onSaveResult: () -> Unit,
-    onDeleteSavedResult: () -> Unit,
+    onShowDeletionConfirmation: () -> Unit,
 ) {
     Column(modifier = modifier) {
         AppText(
@@ -51,7 +51,7 @@ fun IdentificationResult(
             screenWidth = screenWidth,
             onRepeatScan = { onRepeatScan() },
             onSaveResult = { onSaveResult() },
-            onDeleteSavedResult = { onDeleteSavedResult() },
+            onDeleteSavedResult = { onShowDeletionConfirmation() },
             modifier = Modifier.fillMaxWidth()
         )
     }

@@ -1,5 +1,6 @@
 package com.fangga.result.presentation
 
+import android.util.Log
 import com.fangga.core.model.result.Result
 import com.fangga.core.navigation.NavigationService
 import com.fangga.core.presentation.BaseViewModel
@@ -14,7 +15,7 @@ class ResultViewModel @Inject constructor(
 ) : BaseViewModel<ResultState, ResultEvent>(ResultState()) {
 
     private fun deleteSavedResult(resultId: String) {
-
+        Log.d("ResultViewModel", "deleteSavedResult: $resultId")
     }
 
     private fun navigateToScanScreen() {
@@ -22,7 +23,7 @@ class ResultViewModel @Inject constructor(
     }
 
     private fun saveResult(result: Result) {
-
+        Log.d("ResultViewModel", "saveResult: $result")
     }
 
     private fun showModal(isShowModal: Boolean) {
@@ -33,6 +34,10 @@ class ResultViewModel @Inject constructor(
         navigator.goBack()
     }
 
+    private fun showDeletionConfirmation(isShowDeletionConfirmation: Boolean) {
+        updateUiState { copy(isShowDeletionConfirmation = isShowDeletionConfirmation) }
+    }
+
     override suspend fun handleEvent(event: ResultEvent) {
         when (event) {
             is ResultEvent.DeleteSavedResult -> deleteSavedResult(event.resultId)
@@ -40,6 +45,7 @@ class ResultViewModel @Inject constructor(
             is ResultEvent.SaveResult -> saveResult(event.result)
             is ResultEvent.ShowModal -> showModal(event.isShowModal)
             ResultEvent.NavigateBack -> navigateBack()
+            is ResultEvent.ShowDeletionConfirmation -> showDeletionConfirmation(event.isShowDeletionConfirmation)
         }
     }
 }
