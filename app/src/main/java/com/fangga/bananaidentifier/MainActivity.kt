@@ -13,6 +13,7 @@ import com.fangga.navigation.AppNavigation
 import com.fangga.navigation.Navigator
 import com.fangga.result.presentation.ResultScreen
 import com.fangga.savedresult.presentation.SavedResultScreen
+import com.fangga.scan.presentation.ScanScreen
 import com.fangga.termscondition.TermsConditionScreen
 import com.fangga.tips.presentation.TipsDetailScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,7 +46,12 @@ class MainActivity : ComponentActivity() {
                 },
                 privacyAndPolicyScreen = { PrivacyPolicyScreen(screenWidth, screenHeight) },
                 termsAndConditionScreen = { TermsConditionScreen(screenWidth, screenHeight) },
-                scanCameraScreen = { /*TODO*/ },
+                scanCameraScreen = {
+                    ScanScreen(
+                        screenWidth = screenWidth,
+                        screenHeight = screenHeight
+                    )
+                },
                 scanResultScreen = { ResultScreen(screenWidth = screenWidth) },
                 savedResultScreen = { SavedResultScreen(screenHeight) }
             )

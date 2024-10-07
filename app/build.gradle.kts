@@ -65,6 +65,7 @@ dependencies {
     implementation(project(":features:tips"))
     implementation(project(":features:savedresult"))
     implementation(project(":features:result"))
+    implementation(project(":features:scan"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -101,6 +102,4 @@ dependencies {
     // Dagger - Hilt
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.core)
-
-
 }
