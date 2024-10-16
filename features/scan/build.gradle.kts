@@ -20,7 +20,6 @@ android {
 
     buildFeatures {
         compose = true
-        mlModelBinding = true
     }
 
     kotlinOptions {
@@ -39,8 +38,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
-    implementation(libs.tensorflow.lite.support)
-    implementation(libs.tensorflow.lite.metadata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -67,9 +64,4 @@ dependencies {
     implementation(libs.camerax.view)
     implementation(libs.camerax.mlkit)
     implementation(libs.camerax.extensions)
-
-    // Tensorflow Lite
-    implementation(libs.tensorflow.lite.task.vision)
-    implementation(libs.tensorflow.lite.gpu.delegate.plugin)
-    implementation(libs.tensorflow.lite.gpu)
 }
