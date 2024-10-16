@@ -1,6 +1,7 @@
 package com.fangga.navigation
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -22,6 +23,7 @@ import com.fangga.core.model.navbar.NavigationBarItem
 import com.fangga.core.resource.cameraShutterIcon
 import com.fangga.core.resource.greenPrimary
 import com.fangga.core.utils.singleClick
+import com.fangga.navigation.screens.ScanResult
 import com.fangga.navigation.screens.TipsDetail
 import kotlinx.coroutines.flow.collectLatest
 
@@ -37,7 +39,7 @@ fun AppNavigation(
     privacyAndPolicyScreen: @Composable () -> Unit,
     termsAndConditionScreen: @Composable () -> Unit,
     scanCameraScreen: @Composable () -> Unit,
-    scanResultScreen: @Composable () -> Unit, // TODO: Add Scan Result To Argument
+    scanResultScreen: @Composable (String, String, String, Boolean) -> Unit,
     savedResultScreen: @Composable () -> Unit,
 ) {
 
@@ -130,8 +132,16 @@ fun AppNavigation(
                 scanCameraScreen()
             }
 
-            composable(Destination.scanResult.route) {
-                scanResultScreen()
+            composable(Destination.scanResult.route, Destination.scanResult.arguments) {
+                val scanResultArgs = ScanResult.objectParser(it)
+                val (
+                    isNewResult,
+                    encodedImageUri,
+                    bananaType,
+                    ripenessType
+                ) = scanResultArgs.split(",")
+                val imageUri = Uri.decode(encodedImageUri)
+                scanResultScreen(imageUri, bananaType, ripenessType, isNewResult.toBoolean())
             }
 
             composable(Destination.savedResult.route) {
@@ -139,6 +149,4 @@ fun AppNavigation(
             }
         }
     }
-
-
 }

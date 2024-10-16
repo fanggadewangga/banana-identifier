@@ -1,11 +1,16 @@
 package com.fangga.bananaidentifier
 
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.ui.platform.LocalConfiguration
 import com.fangga.about.presentation.PrivacyPolicyScreen
+import com.fangga.core.model.result.ScanResult
+import com.fangga.core.utils.mapDateToFormattedString
 import com.fangga.features.home.presentation.HomeScreen
 import com.fangga.features.onboard.presentation.OnboardScreen
 import com.fangga.features.splash.presentation.SplashScreen
@@ -17,6 +22,8 @@ import com.fangga.scan.presentation.ScanScreen
 import com.fangga.termscondition.TermsConditionScreen
 import com.fangga.tips.presentation.TipsDetailScreen
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDateTime
+import java.util.UUID
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -25,6 +32,7 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var navigator: Navigator
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -52,7 +60,21 @@ class MainActivity : ComponentActivity() {
                         screenHeight = screenHeight
                     )
                 },
-                scanResultScreen = { ResultScreen(screenWidth = screenWidth) },
+                scanResultScreen = { imageUri, bananaType, ripenessType, isNewResult ->
+                    val date = LocalDateTime.now()
+                    val result = ScanResult(
+                        resultId = UUID.randomUUID().toString(),
+                        image = Uri.parse(imageUri),
+                        bananaType = bananaType,
+                        ripenessType = ripenessType,
+                        timestamp = mapDateToFormattedString(date = date)
+                    )
+                    ResultScreen(
+                        screenWidth = screenWidth,
+                        scanResult = result,
+                        isNewResult = isNewResult
+                    )
+                },
                 savedResultScreen = { SavedResultScreen(screenHeight) }
             )
         }

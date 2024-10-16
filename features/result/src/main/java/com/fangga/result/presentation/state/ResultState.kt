@@ -1,9 +1,9 @@
 package com.fangga.result.presentation.state
 
-import com.fangga.core.model.result.Result
+import com.fangga.core.model.result.ScanResult
 
 data class ResultState(
     val isShowModal: Boolean = true,
     val isShowDeletionConfirmation: Boolean = false,
-    val result: Result? = null,
+    val scanResult: ScanResult? = null,
 )

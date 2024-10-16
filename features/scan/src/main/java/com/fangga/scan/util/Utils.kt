@@ -7,10 +7,12 @@ import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import com.fangga.core.model.enums.BananaType
 import com.fangga.core.model.enums.RipenessType
 import com.fangga.core.model.result.BananaClassificationResult
 import com.fangga.scan.domain.BananaClassification
+import java.io.File
 
 fun hasRequiredPermission(context: Context): Boolean {
     return Constants.CAMERAX_PERMISSION.all {
@@ -60,4 +62,12 @@ fun getRotationDegreesFromUri(context: Context, uri: Uri): Int {
         ExifInterface.ORIENTATION_ROTATE_270 -> 270
         else -> 0
     }
+}
+
+fun saveBitmapToFileAndGetUri(context: Context, bitmap: Bitmap): String {
+    val file = File(context.cacheDir, "captured_image.jpg")
+    file.outputStream().use { out ->
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+    }
+    return file.toUri().toString()
 }

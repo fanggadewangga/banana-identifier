@@ -5,7 +5,7 @@ import com.fangga.core.model.result.BananaClassificationResult
 
 data class ScanState(
     val capturedImage: Bitmap? = null,
-    val result: BananaClassificationResult? = null,
+    val scanResult: BananaClassificationResult? = null,
     val errorMessage: String = "",
     val isLoading: Boolean = false,
     val isError: Boolean = false,

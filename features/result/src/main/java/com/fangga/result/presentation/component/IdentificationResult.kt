@@ -9,18 +9,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.fangga.core.components.common.AppText
-import com.fangga.core.model.result.Result
+import com.fangga.core.model.result.ScanResult
 import com.fangga.core.resource.bananaTypeIndicator
 import com.fangga.core.resource.h11SemiBold
 import com.fangga.core.resource.ripenessTypeIndicator
-import com.fangga.core.utils.toDescription
 
 @Composable
 fun IdentificationResult(
     modifier: Modifier = Modifier,
     screenWidth: Int,
     isNewResult: Boolean,
-    result: Result,
+    scanResult: ScanResult,
     onRepeatScan: () -> Unit,
     onSaveResult: () -> Unit,
     onShowDeletionConfirmation: () -> Unit,
@@ -34,14 +33,14 @@ fun IdentificationResult(
         Spacer(modifier = Modifier.height(20.dp))
         IdentificationIndicator(
             indicator = "Jenis Pisang",
-            value = result.bananaType.toDescription(),
+            value = scanResult.bananaType,
             icon = bananaTypeIndicator,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
         IdentificationIndicator(
             indicator = "Tipe & Tingkat Kematangan",
-            value = result.ripenessType.toDescription(),
+            value = scanResult.ripenessType,
             icon = ripenessTypeIndicator,
             modifier = Modifier.fillMaxWidth()
         )

@@ -12,17 +12,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.fangga.core.components.common.AppImage
 import com.fangga.core.components.common.AppText
-import com.fangga.core.model.enums.BananaType
 import com.fangga.core.resource.bodyText14Regular
 import com.fangga.core.resource.deleteConfirmationImage
 import com.fangga.core.resource.h11SemiBold
-import com.fangga.core.utils.toDescription
 
 @Composable
 fun DeletionConfirmation(
     modifier: Modifier = Modifier,
     screenWidth: Int,
-    bananaType: BananaType,
+    bananaType: String,
     onCancelClicked: () -> Unit,
     onDeleteClicked: () -> Unit,
 ) {
@@ -33,7 +31,7 @@ fun DeletionConfirmation(
         modifier = modifier.fillMaxWidth()
     ) {
         AppText(
-            text = bananaType.toDescription(),
+            text = bananaType,
             textStyle = h11SemiBold,
             textAlign = TextAlign.Center
         )

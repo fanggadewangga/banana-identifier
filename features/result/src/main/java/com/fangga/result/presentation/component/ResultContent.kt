@@ -1,5 +1,6 @@
 package com.fangga.result.presentation.component
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.fadeIn
@@ -21,7 +22,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.fangga.core.components.common.AppImage
-import com.fangga.core.model.result.Result
+import com.fangga.core.model.result.ScanResult
 import com.fangga.core.resource.backIcon
 import kotlinx.coroutines.launch
 
@@ -30,7 +31,7 @@ import kotlinx.coroutines.launch
 fun ResultContent(
     modifier: Modifier = Modifier,
     screenWidth: Int,
-    result: Result,
+    scanResult: ScanResult,
     isNewResult: Boolean,
     isShowBottomSheet: Boolean,
     isShowDeletionConfirmation: Boolean,
@@ -38,7 +39,6 @@ fun ResultContent(
     onSaveResult: () -> Unit,
     onDeleteSavedResult: () -> Unit,
     onBackClick: () -> Unit,
-    onDismiss: () -> Unit,
     onCancelDelete: () -> Unit,
     onShowDeletionConfirmation: () -> Unit,
 ) {
@@ -46,10 +46,14 @@ fun ResultContent(
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
 
+    BackHandler {
+        onBackClick()
+    }
+
     Box(modifier = modifier) {
         AppImage(
             contentScale = ContentScale.FillHeight,
-            imageUrl = result.image,
+            imageUrl = scanResult.image,
             contentDescription = "Banana image",
             modifier = Modifier.fillMaxHeight()
         )
@@ -68,10 +72,8 @@ fun ResultContent(
                 containerColor = Color.White,
                 sheetState = sheetState,
                 onDismissRequest = {
-                    scope.launch { sheetState.show() }.invokeOnCompletion {
-                        if (!sheetState.isVisible) {
-                            onDismiss()
-                        }
+                    scope.launch {
+                        sheetState.show()
                     }
                 },
                 modifier = Modifier.wrapContentSize()
@@ -82,7 +84,7 @@ fun ResultContent(
                 ) {
                     DeletionConfirmation(
                         screenWidth = screenWidth,
-                        bananaType = result.bananaType,
+                        bananaType = scanResult.bananaType,
                         onCancelClicked = { onCancelDelete() },
                         onDeleteClicked = { onDeleteSavedResult() }
                     )
@@ -94,7 +96,7 @@ fun ResultContent(
                     IdentificationResult(
                         isNewResult = isNewResult,
                         screenWidth = screenWidth,
-                        result = result,
+                        scanResult = scanResult,
                         onRepeatScan = { onRepeatScan() },
                         onSaveResult = { onSaveResult() },
                         onShowDeletionConfirmation = { onShowDeletionConfirmation() },

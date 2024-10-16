@@ -1,7 +1,7 @@
 package com.fangga.result.presentation
 
 import android.util.Log
-import com.fangga.core.model.result.Result
+import com.fangga.core.model.result.ScanResult
 import com.fangga.core.navigation.NavigationService
 import com.fangga.core.presentation.BaseViewModel
 import com.fangga.result.presentation.event.ResultEvent
@@ -19,11 +19,13 @@ class ResultViewModel @Inject constructor(
     }
 
     private fun navigateToScanScreen() {
-        navigator.navigateTo("scan_camera")
+        navigator.navigateTo("scan_camera") {
+            popUpTo("scan_camera") { inclusive = true }
+        }
     }
 
-    private fun saveResult(result: Result) {
-        Log.d("ResultViewModel", "saveResult: $result")
+    private fun saveResult(scanResult: ScanResult) {
+        Log.d("ResultViewModel", "saveResult: $scanResult")
     }
 
     private fun showModal(isShowModal: Boolean) {
@@ -42,7 +44,7 @@ class ResultViewModel @Inject constructor(
         when (event) {
             is ResultEvent.DeleteSavedResult -> deleteSavedResult(event.resultId)
             ResultEvent.RepeatScan -> navigateToScanScreen()
-            is ResultEvent.SaveResult -> saveResult(event.result)
+            is ResultEvent.SaveResult -> saveResult(event.scanResult)
             is ResultEvent.ShowModal -> showModal(event.isShowModal)
             ResultEvent.NavigateBack -> navigateBack()
             is ResultEvent.ShowDeletionConfirmation -> showDeletionConfirmation(event.isShowDeletionConfirmation)

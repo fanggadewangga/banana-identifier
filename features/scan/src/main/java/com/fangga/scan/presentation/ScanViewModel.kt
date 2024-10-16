@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
-import android.util.Log
+import android.widget.Toast
 import androidx.camera.core.ImageCapture.OnImageCapturedCallback
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.ImageProxy
@@ -15,6 +15,7 @@ import androidx.lifecycle.viewModelScope
 import com.fangga.core.navigation.NavigationService
 import com.fangga.core.presentation.BaseViewModel
 import com.fangga.core.utils.getBitmapFromUri
+import com.fangga.core.utils.toDescription
 import com.fangga.scan.data.TfLiteClassifier
 import com.fangga.scan.presentation.event.ScanEvent
 import com.fangga.scan.presentation.state.ScanState
@@ -23,6 +24,7 @@ import com.fangga.scan.util.Constants
 import com.fangga.scan.util.getRotationDegreesFromUri
 import com.fangga.scan.util.hasRequiredPermission
 import com.fangga.scan.util.rotateBitmap
+import com.fangga.scan.util.saveBitmapToFileAndGetUri
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -55,6 +57,23 @@ class ScanViewModel @Inject constructor(
         navigator.goBack()
     }
 
+    private fun navigateToScanResult(
+        context: Context,
+        bananaType: String,
+        ripenessType: String
+    ) {
+        val capturedImage = uiState.value.capturedImage
+        if (capturedImage != null) {
+            val capturedImageFile = saveBitmapToFileAndGetUri(context, capturedImage)
+            val encodedImageUri = Uri.encode(capturedImageFile)
+
+            navigator.navigateTo("scan_result/true/${encodedImageUri}/${bananaType}/${ripenessType}") {
+                launchSingleTop = true
+                restoreState = true
+            }
+        }
+    }
+
     private fun takePicture(
         context: Context,
         controller: LifecycleCameraController,
@@ -77,26 +96,15 @@ class ScanViewModel @Inject constructor(
 
                     val croppedBitmap = correctedBitmap.centerCrop(224, 224)
                     analyzeCapturedImage(context, croppedBitmap, rotationDegrees)
-
-                    Log.d("ScanViewModel", "takePicture: $image")
                 }
 
                 override fun onError(exception: ImageCaptureException) {
                     super.onError(exception)
-                    Log.d("ScanViewModel", "onError: $exception")
+                    Toast.makeText(context, exception.toString(), Toast.LENGTH_SHORT).show()
                     updateUiState { copy(isError = true, errorMessage = exception.toString()) }
                 }
             }
         )
-
-        viewModelScope.launch {
-            delay(4000L)
-            updateUiState { copy(isLoading = false) }
-
-            delay(2000L)
-            updateUiState { copy(capturedImage = null) }
-            openSheet(false)
-        }
     }
 
     private fun pickImageFromGallery(context: Context, uri: Uri) {
@@ -112,17 +120,6 @@ class ScanViewModel @Inject constructor(
 
             val croppedBitmap = correctedBitmap.centerCrop(224, 224)
             analyzeCapturedImage(context, croppedBitmap, rotationDegrees)
-
-            Log.d("ScanViewModel", "pickImage: $pickedImage")
-
-            viewModelScope.launch {
-                delay(4000L)
-                updateUiState { copy(isLoading = false) }
-
-                delay(2000L)
-                updateUiState { copy(capturedImage = null) }
-                openSheet(false)
-            }
         }
     }
 
@@ -134,13 +131,33 @@ class ScanViewModel @Inject constructor(
         updateUiState { copy(isLoading = isLoading, isSheetOpen = isLoading) }
     }
 
-    private fun analyzeCapturedImage(context: Context, bitmap: Bitmap, rotationDegrees: Int) {
+    private fun analyzeCapturedImage(
+        context: Context,
+        bitmap: Bitmap,
+        rotationDegrees: Int
+    ) {
         try {
-            val classifier = TfLiteClassifier(context = context)
-            val result = classifier.classify(bitmap, rotationDegrees)
-            updateUiState { copy(result = result.first()) }
+            viewModelScope.launch {
+                val classifier = TfLiteClassifier(context = context)
+                val result = classifier.classify(bitmap, rotationDegrees).first()
+                updateUiState { copy(scanResult = result) }
+
+                delay(4000L)
+                updateUiState { copy(isLoading = false) }
+
+                delay(2000L)
+                openSheet(false)
+
+                navigateToScanResult(
+                    context,
+                    result.bananaType.toDescription(),
+                    result.ripenessType.toDescription()
+                )
+
+                updateUiState { copy(capturedImage = null) }
+            }
         } catch (e: Exception) {
-            Log.d("Analyze Error", e.message.toString())
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 

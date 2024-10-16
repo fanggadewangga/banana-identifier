@@ -10,13 +10,18 @@ import com.fangga.core.model.enums.BananaType
 import com.fangga.core.model.enums.RipenessType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 fun BananaType.toDescription(): String = this.description
 fun RipenessType.toDescription(): String = this.description
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun mapDateToFormattedString(date: LocalDateTime, format: String): String {
-    val formatter = DateTimeFormatter.ofPattern(format)
+fun mapDateToFormattedString(
+    date: LocalDateTime,
+    format: String = "dd MMMM yyyy · HH:mm",
+    locale: Locale = Locale("id", "ID")
+): String {
+    val formatter = DateTimeFormatter.ofPattern(format, locale)
     return date.format(formatter)
 }
 
