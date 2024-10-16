@@ -3,7 +3,7 @@ package com.fangga.savedresult.presentation.component
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import com.fangga.core.model.result.ResultList
+import com.fangga.core.data.model.result.ResultList
 import com.fangga.core.resource.emptyResultImage
 
 @Composable

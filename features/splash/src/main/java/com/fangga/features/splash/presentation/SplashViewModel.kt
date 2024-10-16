@@ -1,7 +1,7 @@
 package com.fangga.features.splash.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.fangga.core.datasource.datastore.UserDataStore
+import com.fangga.core.data.source.datastore.UserDataStore
 import com.fangga.core.navigation.NavigationService
 import com.fangga.core.presentation.BaseViewModel
 import com.fangga.features.splash.presentation.event.SplashUiEvent

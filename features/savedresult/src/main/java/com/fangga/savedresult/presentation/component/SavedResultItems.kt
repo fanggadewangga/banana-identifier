@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.fangga.core.components.feature.ResultItem
-import com.fangga.core.model.enums.ResultItemSwipeType
-import com.fangga.core.model.result.ResultList
+import com.fangga.core.data.model.enums.ResultItemSwipeType
+import com.fangga.core.data.model.result.ResultList
 
 @Composable
 fun SavedResultItems(

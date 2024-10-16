@@ -1,4 +1,4 @@
-package com.fangga.core.model.enums
+package com.fangga.core.data.model.enums
 
 enum class RipenessType(val description: String) {
     ALAMI("Matang Alami"),

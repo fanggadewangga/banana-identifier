@@ -8,8 +8,11 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.fangga.core.datasource.datastore.UserDataStore
+import androidx.room.Room
+import com.fangga.core.data.source.datastore.UserDataStore
+import com.fangga.core.data.source.room.database.BananaIdentifierDb
 import com.fangga.core.utils.Constants
+import com.fangga.core.utils.Constants.ROOM_DB_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,8 +25,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class DataModule {
-
+class LocalDatasourceModule {
     @Provides
     @Singleton
     fun provideDataStore(
@@ -42,4 +44,14 @@ class DataModule {
     fun provideUserDataStore(
         dataStore: DataStore<Preferences>
     ): UserDataStore = UserDataStore(dataStore)
+
+    @Provides
+    @Singleton
+    fun provideRoomDatabase(@ApplicationContext context: Context): BananaIdentifierDb {
+        return Room.databaseBuilder(
+            context,
+            BananaIdentifierDb::class.java,
+            ROOM_DB_NAME
+        ).build()
+    }
 }

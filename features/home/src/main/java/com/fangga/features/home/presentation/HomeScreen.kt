@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fangga.core.components.common.AppText
-import com.fangga.core.model.enums.ResultItemSwipeType
+import com.fangga.core.data.model.enums.ResultItemSwipeType
 import com.fangga.core.resource.h10Bold
 import com.fangga.features.home.presentation.components.AboutApp
 import com.fangga.features.home.presentation.components.HomeBackground

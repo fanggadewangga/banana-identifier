@@ -1,7 +1,7 @@
 package com.fangga.features.home.presentation
 
 import android.util.Log
-import com.fangga.core.datasource.datastore.UserDataStore
+import com.fangga.core.data.source.datastore.UserDataStore
 import com.fangga.core.navigation.NavigationService
 import com.fangga.core.presentation.BaseViewModel
 import com.fangga.features.home.data.static.Static

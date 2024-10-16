@@ -32,8 +32,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.fangga.core.components.common.AppImage
 import com.fangga.core.components.common.AppText
-import com.fangga.core.model.enums.ResultItemSwipeType
-import com.fangga.core.model.result.ResultList
+import com.fangga.core.data.model.enums.ResultItemSwipeType
+import com.fangga.core.data.model.result.ResultList
 import com.fangga.core.resource.bodyText12Regular
 import com.fangga.core.resource.bodyText14Medium
 import com.fangga.core.resource.deleteActionBackground

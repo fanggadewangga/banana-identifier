@@ -1,7 +1,7 @@
 package com.fangga.features.home.presentation.state
 
 import androidx.compose.runtime.Immutable
-import com.fangga.core.model.result.ResultList
+import com.fangga.core.data.model.result.ResultList
 import com.fangga.features.home.data.static.Static
 import com.fangga.features.home.domain.model.AboutApp
 import com.fangga.features.home.domain.model.ListTipsAndRecommendation

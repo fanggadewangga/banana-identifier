@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
-import com.fangga.core.model.navbar.NavigationBarItem
+import com.fangga.core.data.model.navbar.NavigationBarItem
 import com.fangga.core.resource.bodyText14Regular
 import com.fangga.core.resource.greenPrimary
 import com.fangga.core.resource.h12SemiBold

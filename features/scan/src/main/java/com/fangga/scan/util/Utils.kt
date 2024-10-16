@@ -8,9 +8,9 @@ import android.media.ExifInterface
 import android.net.Uri
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import com.fangga.core.model.enums.BananaType
-import com.fangga.core.model.enums.RipenessType
-import com.fangga.core.model.result.BananaClassificationResult
+import com.fangga.core.data.model.enums.BananaType
+import com.fangga.core.data.model.enums.RipenessType
+import com.fangga.core.data.model.result.BananaClassificationResult
 import com.fangga.scan.domain.BananaClassification
 import java.io.File
 

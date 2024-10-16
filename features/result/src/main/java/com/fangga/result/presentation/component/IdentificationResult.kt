@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.fangga.core.components.common.AppText
-import com.fangga.core.model.result.ScanResult
+import com.fangga.core.data.model.result.ScanResult
 import com.fangga.core.resource.bananaTypeIndicator
 import com.fangga.core.resource.h11SemiBold
 import com.fangga.core.resource.ripenessTypeIndicator

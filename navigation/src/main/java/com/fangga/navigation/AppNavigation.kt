@@ -19,7 +19,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.fangga.core.components.common.AppImage
 import com.fangga.core.components.common.AppNavigationBar
-import com.fangga.core.model.navbar.NavigationBarItem
+import com.fangga.core.data.model.navbar.NavigationBarItem
 import com.fangga.core.resource.cameraShutterIcon
 import com.fangga.core.resource.greenPrimary
 import com.fangga.core.utils.singleClick

@@ -7,7 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.fangga.core.components.common.AppText
-import com.fangga.core.model.enums.ResultItemSwipeType
+import com.fangga.core.data.model.enums.ResultItemSwipeType
 import com.fangga.core.resource.bodyText12Medium
 import com.fangga.core.resource.deleteActionBackground
 import com.fangga.core.resource.redMainDanger

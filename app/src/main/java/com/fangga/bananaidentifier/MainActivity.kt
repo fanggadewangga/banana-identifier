@@ -9,7 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.compose.ui.platform.LocalConfiguration
 import com.fangga.about.presentation.PrivacyPolicyScreen
-import com.fangga.core.model.result.ScanResult
+import com.fangga.core.data.model.result.ScanResult
 import com.fangga.core.utils.mapDateToFormattedString
 import com.fangga.features.home.presentation.HomeScreen
 import com.fangga.features.onboard.presentation.OnboardScreen

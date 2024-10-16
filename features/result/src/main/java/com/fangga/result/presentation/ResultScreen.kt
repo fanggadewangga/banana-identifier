@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.fangga.core.model.result.ScanResult
+import com.fangga.core.data.model.result.ScanResult
 import com.fangga.result.presentation.component.ResultContent
 import com.fangga.result.presentation.event.ResultEvent
 

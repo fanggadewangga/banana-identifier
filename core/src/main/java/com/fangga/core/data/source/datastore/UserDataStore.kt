@@ -1,4 +1,4 @@
-package com.fangga.core.datasource.datastore
+package com.fangga.core.data.source.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

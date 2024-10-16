@@ -1,7 +1,8 @@
 package com.fangga.result.presentation
 
 import android.util.Log
-import com.fangga.core.model.result.ScanResult
+import com.fangga.core.data.datasource.LocalDataSource
+import com.fangga.core.data.model.result.ScanResult
 import com.fangga.core.navigation.NavigationService
 import com.fangga.core.presentation.BaseViewModel
 import com.fangga.result.presentation.event.ResultEvent
@@ -11,7 +12,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ResultViewModel @Inject constructor(
-    private val navigator: NavigationService
+    private val navigator: NavigationService,
+    private val localDataSource: LocalDataSource
 ) : BaseViewModel<ResultState, ResultEvent>(ResultState()) {
 
     private fun deleteSavedResult(resultId: String) {

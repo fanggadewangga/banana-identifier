@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.fangga.core.components.common.AppImage
-import com.fangga.core.model.result.ScanResult
+import com.fangga.core.data.model.result.ScanResult
 import com.fangga.core.resource.backIcon
 import kotlinx.coroutines.launch
 

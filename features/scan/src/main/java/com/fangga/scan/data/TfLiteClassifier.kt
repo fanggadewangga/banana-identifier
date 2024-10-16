@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
 import android.view.Surface
-import com.fangga.core.model.result.BananaClassificationResult
+import com.fangga.core.data.model.result.BananaClassificationResult
 import com.fangga.features.scan.ml.Bananaopt
 import com.fangga.scan.domain.BananaClassification
 import com.fangga.scan.domain.BananaClassifier

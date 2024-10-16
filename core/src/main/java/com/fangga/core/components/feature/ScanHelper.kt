@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.fangga.core.components.common.AppText
-import com.fangga.core.model.enums.ScanExampleType
+import com.fangga.core.data.model.enums.ScanExampleType
 import com.fangga.core.resource.bodyText12Regular
 import com.fangga.core.resource.scanExampleBlur
 import com.fangga.core.resource.scanExampleCorrect

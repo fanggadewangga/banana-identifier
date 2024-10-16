@@ -2,7 +2,7 @@ package com.fangga.scan.data
 
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
-import com.fangga.core.model.result.BananaClassificationResult
+import com.fangga.core.data.model.result.BananaClassificationResult
 import com.fangga.scan.domain.BananaClassifier
 import com.fangga.scan.presentation.utils.centerCrop
 

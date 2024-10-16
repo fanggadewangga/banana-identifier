@@ -1,4 +1,4 @@
-package com.fangga.core.model.navbar
+package com.fangga.core.data.model.navbar
 
 import androidx.annotation.DrawableRes
 import com.fangga.core.resource.homeSelectedIcon

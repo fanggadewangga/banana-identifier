@@ -1,8 +1,8 @@
-package com.fangga.core.model.result
+package com.fangga.core.data.model.result
 
 import androidx.annotation.DrawableRes
-import com.fangga.core.model.enums.BananaType
-import com.fangga.core.model.enums.RipenessType
+import com.fangga.core.data.model.enums.BananaType
+import com.fangga.core.data.model.enums.RipenessType
 
 data class ResultList(
     @DrawableRes val image: Int, // TODO: Change image type to ByteArray

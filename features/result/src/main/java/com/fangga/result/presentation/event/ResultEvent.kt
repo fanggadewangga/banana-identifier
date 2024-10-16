@@ -1,6 +1,6 @@
 package com.fangga.result.presentation.event
 
-import com.fangga.core.model.result.ScanResult
+import com.fangga.core.data.model.result.ScanResult
 
 sealed class ResultEvent {
     data class ShowModal(val isShowModal: Boolean) : ResultEvent()

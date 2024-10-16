@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.fangga.core.components.common.AppImage
 import com.fangga.core.components.common.AppText
-import com.fangga.core.model.enums.ScanExampleType
+import com.fangga.core.data.model.enums.ScanExampleType
 import com.fangga.core.resource.bodyText12Medium
 import com.fangga.core.resource.scanExampleCorrectIcon
 import com.fangga.core.resource.scanExampleIncorrectIcon

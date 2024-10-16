@@ -1,7 +1,7 @@
 package com.fangga.scan.presentation.state
 
 import android.graphics.Bitmap
-import com.fangga.core.model.result.BananaClassificationResult
+import com.fangga.core.data.model.result.BananaClassificationResult
 
 data class ScanState(
     val capturedImage: Bitmap? = null,
