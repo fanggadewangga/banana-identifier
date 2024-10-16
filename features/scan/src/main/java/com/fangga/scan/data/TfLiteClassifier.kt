@@ -41,7 +41,6 @@ class TfLiteClassifier(
     override fun classify(bitmap: Bitmap, rotation: Int): List<BananaClassificationResult> {
         Log.d("TfLiteClassifier", "Classify called")
 
-        // Memperbaiki gambar berdasarkan rotasi
         val correctedBitmap = rotateBitmap(bitmap, rotation)
 
         // Process the image
@@ -82,7 +81,7 @@ class TfLiteClassifier(
                     score = score
                 ).toClassificationResult()
                 results.add(classification)
-                Log.d("TfLiteClassifier", "Result: $classification") // Log each result
+                Log.d("TfLiteClassifier", "Result: $classification")
             }
 
             if (maxIndex != null && scores[maxIndex] >= threshold) {
