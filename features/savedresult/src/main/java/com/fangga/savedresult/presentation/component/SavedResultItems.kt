@@ -21,7 +21,7 @@ fun SavedResultItems(
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
-        modifier = modifier.padding(top = topPadding + 32.dp)
+        modifier = modifier.padding(top = topPadding + 32.dp, start = 16.dp, end = 16.dp)
     ) {
         items(items) { result ->
             ResultItem(

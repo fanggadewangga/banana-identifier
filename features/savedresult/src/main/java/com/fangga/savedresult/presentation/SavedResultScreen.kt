@@ -10,6 +10,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -22,6 +23,7 @@ fun SavedResultScreen(screenHeight: Int) {
 
     val viewModel = hiltViewModel<SavedResultViewModel>()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     LaunchedEffect(key1 = true) {
         viewModel.onEvent(SavedResultEvent.LoadSavedResult)
@@ -44,12 +46,18 @@ fun SavedResultScreen(screenHeight: Int) {
         SavedResultContent(
             results = state.results,
             topPadding = topPadding,
-            onSwipeToDelete = { id -> viewModel.onEvent(SavedResultEvent.OnSwipeToDelete(id)) },
+            onSwipeToDelete = { id ->
+                viewModel.onEvent(
+                    SavedResultEvent.OnSwipeToDelete(
+                        context,
+                        id
+                    )
+                )
+            },
             onNavigateToDetail = { id -> viewModel.onEvent(SavedResultEvent.NavigateToDetail(id)) },
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = Color.White)
         )
-
     }
 }

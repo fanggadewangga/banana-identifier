@@ -63,6 +63,7 @@ fun ResultItem(
         modifier = Modifier
             .fillMaxWidth()
             .height(140.dp)
+            .padding(top = 8.dp)
     ) {
         Box(
             contentAlignment = Alignment.CenterEnd,

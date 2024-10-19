@@ -76,8 +76,12 @@ class LocalDataSource(
         emit(Resource.Loading())
         try {
             val results = dao.getAllScanResults()
-            val mappedResults = results.map { it.toScanResultList() }
-            emit(Resource.Success(mappedResults))
+            if (results.isEmpty()) {
+                emit(Resource.Empty())
+            } else {
+                val mappedResults = results.map { it.toScanResultList() }
+                emit(Resource.Success(mappedResults))
+            }
         } catch (e: Exception) {
             emit(Resource.Error(e.message.toString()))
         }
