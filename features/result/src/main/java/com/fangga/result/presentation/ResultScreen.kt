@@ -29,7 +29,8 @@ fun ResultScreen(
         isShowDeletionConfirmation = state.isShowDeletionConfirmation,
         isShowBottomSheet = state.isShowModal,
         onRepeatScan = { viewModel.onEvent(ResultEvent.RepeatScan) },
-        onSaveResult = { viewModel.onEvent(ResultEvent.SaveResult(scanResult)) },
+        onSaveResult = { //viewModel.onEvent(ResultEvent.SaveResult(scanResult))
+        },
         onDeleteSavedResult = { viewModel.onEvent(ResultEvent.DeleteSavedResult(scanResult.resultId)) },
         onBackClick = { viewModel.onEvent(ResultEvent.NavigateBack) },
         onCancelDelete = { viewModel.onEvent(ResultEvent.ShowDeletionConfirmation(false)) },

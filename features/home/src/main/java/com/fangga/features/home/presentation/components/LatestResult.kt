@@ -10,11 +10,11 @@ import androidx.compose.ui.unit.dp
 import com.fangga.core.components.common.AppText
 import com.fangga.core.components.feature.ResultItem
 import com.fangga.core.data.model.enums.ResultItemSwipeType
-import com.fangga.core.data.model.result.ResultList
+import com.fangga.core.data.model.result.ScanResultList
 
 @Composable
 fun LatestResult(
-    data: ResultList,
+    data: ScanResultList,
     swipeType: ResultItemSwipeType,
     onItemClicked: (String) -> Unit,
     onActionClicked: (String) -> Unit,

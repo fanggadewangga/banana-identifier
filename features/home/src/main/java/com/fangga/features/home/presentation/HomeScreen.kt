@@ -1,6 +1,5 @@
 package com.fangga.features.home.presentation
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -32,6 +32,7 @@ fun HomeScreen(screenHeight: Int, screenWidth: Int) {
 
     val viewModel = hiltViewModel<HomeViewModel>()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.onEvent(HomeEvent.LoadLatestResult)
@@ -63,12 +64,20 @@ fun HomeScreen(screenHeight: Int, screenWidth: Int) {
                             viewModel.onEvent(HomeEvent.OnLatestResultClicked(state.latestResult!!.resultId))
                         },
                         onActionClicked = {
-                            Log.d("HomeScreen", "onActionClicked: $it")
+                            viewModel.onEvent(
+                                HomeEvent.OnLatestResultSwiped(
+                                    context,
+                                    state.latestResult!!
+                                )
+                            )
                         },
                         modifier = Modifier.padding(top = 8.dp)
                     )
                 else
-                    ScanShortcut(onClick = { /*TODO*/ }, modifier = Modifier.padding(top = 24.dp))
+                    ScanShortcut(
+                        onClick = { viewModel.onEvent(HomeEvent.OnScanShortcutClicked) },
+                        modifier = Modifier.padding(top = 24.dp)
+                    )
             }
 
             item {

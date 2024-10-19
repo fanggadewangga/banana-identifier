@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class ScanResult(
+data class ScanResultEntity(
     @PrimaryKey
     var resultId: String,
     var bananaType: String,

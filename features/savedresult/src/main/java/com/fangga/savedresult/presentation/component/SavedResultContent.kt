@@ -3,12 +3,12 @@ package com.fangga.savedresult.presentation.component
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import com.fangga.core.data.model.result.ResultList
+import com.fangga.core.data.model.result.ScanResultList
 import com.fangga.core.resource.emptyResultImage
 
 @Composable
 fun SavedResultContent(
-    results: List<ResultList>,
+    results: List<ScanResultList>,
     topPadding: Dp,
     onSwipeToDelete: (String) -> Unit,
     onNavigateToDetail: (String) -> Unit,

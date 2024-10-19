@@ -1,19 +1,21 @@
 package com.fangga.features.splash.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.fangga.core.data.source.datastore.UserDataStore
+import com.fangga.core.data.base.Resource
+import com.fangga.core.data.repository.user.UserRepository
 import com.fangga.core.navigation.NavigationService
 import com.fangga.core.presentation.BaseViewModel
 import com.fangga.features.splash.presentation.event.SplashUiEvent
 import com.fangga.features.splash.presentation.state.SplashUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val userDataStore: UserDataStore,
+    private val userRepository: UserRepository,
     private val navigator: NavigationService,
 ) : BaseViewModel<SplashUiState, SplashUiEvent>(SplashUiState()) {
 
@@ -26,9 +28,18 @@ class SplashViewModel @Inject constructor(
     }
 
     private suspend fun getPassedOnboardStatus() {
-        userDataStore.getPassedOnboardStatus().collect { hasPassed ->
-            updateUiState { copy(hasPassedOnboard = hasPassed) }
-            handleNavigation(hasPassed)
+        userRepository.readPassedOnboardStatus().collectLatest { result ->
+            when (result) {
+                is Resource.Success -> {
+                    val hasPassed = result.data!!
+                    updateUiState { copy(hasPassedOnboard = hasPassed) }
+                    handleNavigation(hasPassed)
+                }
+
+                is Resource.Empty -> {}
+                is Resource.Error -> {}
+                is Resource.Loading -> {}
+            }
         }
     }
 

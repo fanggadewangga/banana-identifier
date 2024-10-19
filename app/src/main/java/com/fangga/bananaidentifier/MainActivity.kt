@@ -23,7 +23,6 @@ import com.fangga.termscondition.TermsConditionScreen
 import com.fangga.tips.presentation.TipsDetailScreen
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
-import java.util.UUID
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -60,10 +59,10 @@ class MainActivity : ComponentActivity() {
                         screenHeight = screenHeight
                     )
                 },
-                scanResultScreen = { imageUri, bananaType, ripenessType, isNewResult ->
+                scanResultScreen = { resultId, imageUri, bananaType, ripenessType, isNewResult ->
                     val date = LocalDateTime.now()
                     val result = ScanResult(
-                        resultId = UUID.randomUUID().toString(),
+                        resultId = resultId,
                         image = Uri.parse(imageUri),
                         bananaType = bananaType,
                         ripenessType = ripenessType,

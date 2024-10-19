@@ -1,15 +1,16 @@
 package com.fangga.core.data.repository.user
 
-import com.fangga.core.data.source.datastore.UserDataStore
+import com.fangga.core.data.base.Resource
+import com.fangga.core.data.datasource.LocalDataSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    private val dataStore: UserDataStore
+    private val localDataSource: LocalDataSource
 ) : UserRepository {
-    override suspend fun savePassedOnboardStatus(isPassed: Boolean) =
-        dataStore.setPassedOnboardStatus(isPassed)
+    override suspend fun savePassedOnboardStatus(isPassed: Boolean): Flow<Resource<Unit>> =
+        localDataSource.savePassedOnboardStatus(isPassed)
 
-    override suspend fun readPassedOnboardStatus(): Flow<Boolean> =
-        dataStore.getPassedOnboardStatus()
+    override suspend fun readPassedOnboardStatus(): Flow<Resource<Boolean>> =
+        localDataSource.readPassedOnboardStatus()
 }

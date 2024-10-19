@@ -39,7 +39,7 @@ fun AppNavigation(
     privacyAndPolicyScreen: @Composable () -> Unit,
     termsAndConditionScreen: @Composable () -> Unit,
     scanCameraScreen: @Composable () -> Unit,
-    scanResultScreen: @Composable (String, String, String, Boolean) -> Unit,
+    scanResultScreen: @Composable (String, String, String, String, Boolean) -> Unit,
     savedResultScreen: @Composable () -> Unit,
 ) {
 
@@ -136,12 +136,19 @@ fun AppNavigation(
                 val scanResultArgs = ScanResult.objectParser(it)
                 val (
                     isNewResult,
+                    resultId,
                     encodedImageUri,
                     bananaType,
                     ripenessType
                 ) = scanResultArgs.split(",")
                 val imageUri = Uri.decode(encodedImageUri)
-                scanResultScreen(imageUri, bananaType, ripenessType, isNewResult.toBoolean())
+                scanResultScreen(
+                    resultId,
+                    imageUri,
+                    bananaType,
+                    ripenessType,
+                    isNewResult.toBoolean()
+                )
             }
 
             composable(Destination.savedResult.route) {

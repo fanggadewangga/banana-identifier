@@ -1,7 +1,7 @@
 package com.fangga.features.onboard.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.fangga.core.data.source.datastore.UserDataStore
+import com.fangga.core.data.repository.user.UserRepository
 import com.fangga.core.navigation.NavigationService
 import com.fangga.core.presentation.BaseViewModel
 import com.fangga.features.onboard.presentation.event.OnboardEvent
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OnboardViewModel @Inject constructor(
-    private val userDataStore: UserDataStore,
+    private val userRepository: UserRepository,
     private val navigator: NavigationService
 ) : BaseViewModel<OnboardState, OnboardEvent>(OnboardState()) {
 
@@ -23,7 +23,7 @@ class OnboardViewModel @Inject constructor(
             is OnboardEvent.OnNextClicked -> handleNextClicked()
             is OnboardEvent.OnStartClicked -> {
                 viewModelScope.launch {
-                    userDataStore.setPassedOnboardStatus(true)
+                    userRepository.savePassedOnboardStatus(true)
                     navigateToHome()
                 }
             }

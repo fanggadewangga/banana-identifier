@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import com.fangga.core.components.common.AppImage
 import com.fangga.core.components.common.AppText
 import com.fangga.core.data.model.enums.ResultItemSwipeType
-import com.fangga.core.data.model.result.ResultList
+import com.fangga.core.data.model.result.ScanResultList
 import com.fangga.core.resource.bodyText12Regular
 import com.fangga.core.resource.bodyText14Medium
 import com.fangga.core.resource.deleteActionBackground
@@ -41,14 +41,13 @@ import com.fangga.core.resource.greenPrimary
 import com.fangga.core.resource.redMainDanger
 import com.fangga.core.resource.tosca10
 import com.fangga.core.utils.noRippleClickable
-import com.fangga.core.utils.toDescription
 
 @Deprecated("Migrate Swipeable to AnchorDraggable")
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ResultItem(
     modifier: Modifier = Modifier,
-    data: ResultList,
+    data: ScanResultList,
     swipeType: ResultItemSwipeType,
     onItemClicked: (String) -> Unit,
     onActionClicked: () -> Unit,
@@ -115,7 +114,7 @@ fun ResultItem(
                 ) {
                     AppImage(
                         imageUrl = data.image,
-                        contentDescription = "${data.bananaType.toDescription()} image",
+                        contentDescription = "${data.bananaType} image",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .size(height = 128.dp, width = 100.dp)
@@ -129,10 +128,10 @@ fun ResultItem(
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             AppText(
-                                text = data.bananaType.toDescription(), textStyle = bodyText14Medium
+                                text = data.bananaType, textStyle = bodyText14Medium
                             )
                             AppText(
-                                text = data.ripenessType.toDescription(),
+                                text = data.ripenessType,
                                 textStyle = bodyText12Regular
                             )
                         }

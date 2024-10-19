@@ -1,13 +1,16 @@
 package com.fangga.result.presentation
 
-import android.util.Log
+import androidx.lifecycle.viewModelScope
+import com.fangga.core.data.base.Resource
 import com.fangga.core.data.datasource.LocalDataSource
-import com.fangga.core.data.model.result.ScanResult
+import com.fangga.core.data.source.room.entity.ScanResultEntity
 import com.fangga.core.navigation.NavigationService
 import com.fangga.core.presentation.BaseViewModel
 import com.fangga.result.presentation.event.ResultEvent
 import com.fangga.result.presentation.state.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,7 +20,21 @@ class ResultViewModel @Inject constructor(
 ) : BaseViewModel<ResultState, ResultEvent>(ResultState()) {
 
     private fun deleteSavedResult(resultId: String) {
-        Log.d("ResultViewModel", "deleteSavedResult: $resultId")
+        viewModelScope.launch {
+            localDataSource.deleteScanResultById(resultId).collectLatest { result ->
+                when (result) {
+                    is Resource.Empty -> updateUiState { copy(isLoading = false) }
+                    is Resource.Error -> updateUiState { copy(isLoading = false) }
+                    is Resource.Loading -> updateUiState { copy(isLoading = true) }
+                    is Resource.Success -> updateUiState {
+                        copy(
+                            isLoading = false,
+                            message = "Berhasil menghapus hasil scan"
+                        )
+                    }
+                }
+            }
+        }
     }
 
     private fun navigateToScanScreen() {
@@ -26,8 +43,29 @@ class ResultViewModel @Inject constructor(
         }
     }
 
-    private fun saveResult(scanResult: ScanResult) {
-        Log.d("ResultViewModel", "saveResult: $scanResult")
+    private fun saveResult(scanResult: ScanResultEntity) {
+        viewModelScope.launch {
+            localDataSource.insertNewScanResult(scanResult).collectLatest { result ->
+                when (result) {
+                    is Resource.Empty -> {}
+                    is Resource.Error -> updateUiState {
+                        copy(
+                            isLoading = false,
+                            isError = true,
+                            message = result.message
+                        )
+                    }
+
+                    is Resource.Loading -> updateUiState { copy(isLoading = true) }
+                    is Resource.Success -> updateUiState {
+                        copy(
+                            isLoading = false,
+                            message = "Berhasil menyimpan hasil scan"
+                        )
+                    }
+                }
+            }
+        }
     }
 
     private fun showModal(isShowModal: Boolean) {
