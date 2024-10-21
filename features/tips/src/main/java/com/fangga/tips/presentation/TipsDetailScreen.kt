@@ -1,6 +1,7 @@
 package com.fangga.tips.presentation
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,11 +21,7 @@ import com.fangga.tips.presentation.component.TipsDetailContent
 import com.fangga.tips.presentation.event.TipsDetailEvent
 
 @Composable
-fun TipsDetailScreen(
-    tipsId: String,
-    screenWidth: Int,
-    screenHeight: Int,
-) {
+fun TipsDetailScreen(tipsId: String) {
 
     val viewModel = hiltViewModel<TipsDetailViewModel>()
     val state = viewModel.uiState.collectAsStateWithLifecycle()
@@ -69,6 +66,8 @@ fun TipsDetailScreen(
             onBackClick = {
                 viewModel.onEvent(TipsDetailEvent.OnBackClick)
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .navigationBarsPadding()
         )
 }

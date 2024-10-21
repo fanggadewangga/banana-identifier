@@ -2,9 +2,10 @@ package com.fangga.features.home.data.static
 
 import com.fangga.core.resource.privacyIcon
 import com.fangga.core.resource.ratingIcon
-import com.fangga.core.resource.ripenessTips
-import com.fangga.core.resource.scanTips
 import com.fangga.core.resource.termsIcon
+import com.fangga.core.resource.tipsBananaType
+import com.fangga.core.resource.tipsRipenessType
+import com.fangga.core.resource.tipsScan
 import com.fangga.features.home.domain.model.AboutApp
 import com.fangga.features.home.domain.model.ListTipsAndRecommendation
 
@@ -13,12 +14,17 @@ object Static {
         ListTipsAndRecommendation(
             id = "scan_tips",
             title = "Tips Mudah untuk Memindai Pisang dengan Akurat",
-            image = scanTips
+            image = tipsScan
+        ),
+        ListTipsAndRecommendation(
+            id = "banana_type_tips",
+            title = "Pisang yang Bisa Anda Scan di Aplikasi: Mengenal Jenis dan Karakteristiknya",
+            image = tipsBananaType
         ),
         ListTipsAndRecommendation(
             id = "ripeness_tips",
             title = "Memahami Jenis & Tipe Kematangan Pisang",
-            image = ripenessTips
+            image = tipsRipenessType
         )
     )
 

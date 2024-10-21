@@ -45,13 +45,7 @@ class MainActivity : ComponentActivity() {
                 splashScreen = { SplashScreen(screenWidth) },
                 onboardScreen = { OnboardScreen(screenHeight) },
                 homeScreen = { HomeScreen(screenHeight, screenWidth) },
-                tipsDetailScreen = { id ->
-                    TipsDetailScreen(
-                        tipsId = id,
-                        screenWidth = screenWidth,
-                        screenHeight = screenHeight
-                    )
-                },
+                tipsDetailScreen = { id -> TipsDetailScreen(tipsId = id) },
                 privacyAndPolicyScreen = { PrivacyPolicyScreen(screenWidth, screenHeight) },
                 termsAndConditionScreen = { TermsConditionScreen(screenWidth, screenHeight) },
                 scanCameraScreen = {
