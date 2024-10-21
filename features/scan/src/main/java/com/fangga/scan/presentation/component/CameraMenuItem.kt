@@ -12,7 +12,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.fangga.core.components.common.AppImage
 import com.fangga.core.components.common.AppText
-import com.fangga.core.resource.bodyText12Regular
+import com.fangga.core.resource.bodyText14Regular
 import com.fangga.core.utils.noRippleClickable
 
 @Composable
@@ -35,7 +35,7 @@ fun CameraMenu(
         )
         AppText(
             text = title,
-            textStyle = bodyText12Regular,
+            textStyle = bodyText14Regular,
             color = Color.LightGray,
             textAlign = TextAlign.Center
         )

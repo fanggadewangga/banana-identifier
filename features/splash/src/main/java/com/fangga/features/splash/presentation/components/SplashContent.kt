@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.fangga.core.resource.SplashBackground
@@ -23,6 +24,7 @@ fun SplashContent(modifier: Modifier = Modifier, screenWidth: Int) {
     ) {
         AsyncImage(
             model = SplashBackground,
+            contentScale = ContentScale.Crop,
             contentDescription = "Background",
             modifier = Modifier.fillMaxSize()
         )

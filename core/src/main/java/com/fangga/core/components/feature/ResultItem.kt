@@ -62,7 +62,7 @@ fun ResultItem(
         backgroundColor = Color.White,
         modifier = Modifier
             .fillMaxWidth()
-            .height(140.dp)
+            .height(120.dp)
             .padding(top = 8.dp)
     ) {
         Box(
@@ -118,7 +118,7 @@ fun ResultItem(
                         contentDescription = "${data.bananaType} image",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .size(height = 128.dp, width = 100.dp)
+                            .size(height = 88.dp, width = 80.dp)
                             .clip(RoundedCornerShape(8.dp))
                     )
                     Column(

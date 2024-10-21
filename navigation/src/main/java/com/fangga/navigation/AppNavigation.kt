@@ -2,9 +2,13 @@ package com.fangga.navigation
 
 import android.annotation.SuppressLint
 import android.net.Uri
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.BottomAppBar
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
@@ -12,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -63,21 +68,33 @@ fun AppNavigation(
 
     Scaffold(
         bottomBar = {
-            AppNavigationBar(
-                isShowNavbar = isShowNavbar,
-                items = mainScreens,
-                currentDestination = currentDestination,
-                onClick = { route ->
-                    navController.navigate(route) {
-                        popUpTo(navController.graph.id) {
-                            saveState = true
-                            inclusive = true
-                        }
-                        restoreState = true
-                    }
-                },
-                modifier = Modifier.height((screenHeight * 0.08).dp)
-            )
+            if (isShowNavbar)
+                BottomAppBar(
+                    backgroundColor = Color.White,
+                    contentPadding = PaddingValues(0.dp),
+                    cutoutShape = CircleShape,
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .height((screenHeight * 0.08).dp)
+                ) {
+                    AppNavigationBar(
+                        isShowNavbar = true,
+                        items = mainScreens,
+                        currentDestination = currentDestination,
+                        onClick = { route ->
+                            navController.navigate(route) {
+                                popUpTo(navController.graph.id) {
+                                    saveState = true
+                                    inclusive = true
+                                }
+                                restoreState = true
+                            }
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height((screenHeight * 0.08).dp)
+                    )
+                }
         },
         floatingActionButtonPosition = FabPosition.Center,
         isFloatingActionButtonDocked = true,

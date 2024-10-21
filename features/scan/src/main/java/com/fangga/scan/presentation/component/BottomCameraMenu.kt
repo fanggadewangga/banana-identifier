@@ -38,13 +38,13 @@ fun BottomCameraMenu(
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp, bottom = 32.dp)
+                .padding(vertical = 18.dp)
         ) {
             CameraMenu(icon = galleryIcon, title = "Galeri", onClick = onGalleryClicked)
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
-                    .size(64.dp)
+                    .size(52.dp)
                     .background(color = greenPrimary, shape = CircleShape)
                     .noRippleClickable { onCaptureImage() }
             ) {

@@ -38,6 +38,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val screenWidth = LocalConfiguration.current.screenWidthDp
             val screenHeight = LocalConfiguration.current.screenHeightDp
+
             AppNavigation(
                 navigator = navigator,
                 screenHeight = screenHeight,
