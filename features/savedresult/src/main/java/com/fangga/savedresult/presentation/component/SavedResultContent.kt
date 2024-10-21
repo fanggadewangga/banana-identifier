@@ -11,7 +11,7 @@ fun SavedResultContent(
     results: List<ScanResultList>,
     topPadding: Dp,
     onSwipeToDelete: (String) -> Unit,
-    onNavigateToDetail: (String) -> Unit,
+    onNavigateToDetail: (ScanResultList) -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (results.isEmpty())

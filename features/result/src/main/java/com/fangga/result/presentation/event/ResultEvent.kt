@@ -9,4 +9,5 @@ sealed class ResultEvent {
     data class DeleteSavedResult(val resultId: String): ResultEvent()
     data object NavigateBack: ResultEvent()
     data class ShowDeletionConfirmation(val isShowDeletionConfirmation: Boolean): ResultEvent()
+    data object HideToast : ResultEvent()
 }

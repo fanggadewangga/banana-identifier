@@ -16,7 +16,7 @@ import com.fangga.core.data.model.result.ScanResultList
 fun SavedResultItems(
     items: List<ScanResultList>,
     topPadding: Dp,
-    onItemClicked: (String) -> Unit,
+    onItemClicked: (ScanResultList) -> Unit,
     onSwipeToDelete: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -27,7 +27,7 @@ fun SavedResultItems(
             ResultItem(
                 data = result,
                 swipeType = ResultItemSwipeType.DELETE,
-                onItemClicked = { onItemClicked(result.resultId) },
+                onItemClicked = { onItemClicked(result) },
                 onActionClicked = { onSwipeToDelete(result.resultId) },
                 modifier = Modifier.fillMaxWidth()
             )

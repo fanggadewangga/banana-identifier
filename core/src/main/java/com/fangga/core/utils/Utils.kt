@@ -7,9 +7,11 @@ import android.net.Uri
 import android.os.Build
 import android.util.Base64
 import androidx.annotation.RequiresApi
+import androidx.core.net.toUri
 import com.fangga.core.data.model.enums.BananaType
 import com.fangga.core.data.model.enums.RipenessType
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -63,4 +65,12 @@ fun converterStringToBitmap(encodedString: String): Bitmap? {
         e.printStackTrace()
         null
     }
+}
+
+fun saveBitmapToFileAndGetUri(context: Context, bitmap: Bitmap): String {
+    val file = File(context.cacheDir, "captured_image.jpg")
+    file.outputStream().use { out ->
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+    }
+    return file.toUri().toString()
 }

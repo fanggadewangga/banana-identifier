@@ -1,6 +1,7 @@
 package com.fangga.features.onboard.presentation
 
 import androidx.lifecycle.viewModelScope
+import com.fangga.core.data.base.Resource
 import com.fangga.core.data.repository.user.UserRepository
 import com.fangga.core.navigation.NavigationService
 import com.fangga.core.presentation.BaseViewModel
@@ -23,35 +24,43 @@ class OnboardViewModel @Inject constructor(
             is OnboardEvent.OnNextClicked -> handleNextClicked()
             is OnboardEvent.OnStartClicked -> {
                 viewModelScope.launch {
-                    userRepository.savePassedOnboardStatus(true)
-                    navigateToHome()
+                    viewModelScope.launch {
+                        userRepository.savePassedOnboardStatus(true).collect { result ->
+                            when (result) {
+                                is Resource.Empty -> {}
+                                is Resource.Error -> {}
+                                is Resource.Loading -> {}
+                                is Resource.Success -> navigateToHome()
+                            }
+                        }
+                    }
                 }
             }
+
             is OnboardEvent.OnPageChanged -> handlePageChanged(event.page)
         }
     }
 
     private fun handleNextClicked() {
-        viewModelScope.launch {
-            val nextPage = uiState.value.currentOnboardPage + 1
-            val isLastPage = nextPage == 1
-            updateUiState { copy(currentOnboardPage = if (nextPage <= 1) nextPage else 1, isLastPage = isLastPage) }
+        val nextPage = uiState.value.currentOnboardPage + 1
+        val isLastPage = nextPage == 1
+        updateUiState {
+            copy(
+                currentOnboardPage = if (nextPage <= 1) nextPage else 1,
+                isLastPage = isLastPage
+            )
         }
     }
 
 
     private fun handleSkipOnboard() {
-        viewModelScope.launch {
-            updateUiState { copy(currentOnboardPage = 1, isLastPage = true) }
-        }
+        updateUiState { copy(currentOnboardPage = 1, isLastPage = true) }
     }
 
     private fun handlePageChanged(page: Int) {
-        viewModelScope.launch {
-            val isLastPage = page == 1
-            updateUiState {
-                copy(currentOnboardPage = page, isLastPage = isLastPage)
-            }
+        val isLastPage = page == 1
+        updateUiState {
+            copy(currentOnboardPage = page, isLastPage = isLastPage)
         }
     }
 

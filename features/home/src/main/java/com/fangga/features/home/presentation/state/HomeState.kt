@@ -9,8 +9,11 @@ import com.fangga.features.home.domain.model.ListTipsAndRecommendation
 @Immutable
 data class HomeState(
     val tipsData: List<ListTipsAndRecommendation> = Static.tipsAndRecommendation,
-    val aboutData: List<AboutApp> = Static.aboutApp, // TODO : Add Latest Result
+    val aboutData: List<AboutApp> = Static.aboutApp,
     val latestResult: ScanResultList? = null,
     val isLoading: Boolean = false,
-    val error: String? = null
+    val successMessage: String? = null,
+    val errorMessage: String? = null,
+    val showSuccessToast: Boolean = false,
+    val showErrorToast: Boolean = false,
 )

@@ -1,6 +1,5 @@
 package com.fangga.features.onboard.presentation
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,6 +24,7 @@ import com.fangga.core.components.common.AppButton
 import com.fangga.core.components.common.AppText
 import com.fangga.core.resource.bodyText14Regular
 import com.fangga.core.resource.greenPrimary
+import com.fangga.core.utils.noRippleClickable
 import com.fangga.features.onboard.domain.OnboardItem
 import com.fangga.features.onboard.presentation.components.OnboardIndicator
 import com.fangga.features.onboard.presentation.components.OnboardItem
@@ -44,21 +44,24 @@ fun OnboardScreen(screenHeight: Int) {
         pageCount = { pages.size }
     )
 
+    // Update current page only when the page changes
     LaunchedEffect(key1 = state.currentOnboardPage) {
         pagerState.animateScrollToPage(state.currentOnboardPage)
+    }
+
+    LaunchedEffect(key1 = pagerState.currentPage) {
+        viewModel.onEvent(OnboardEvent.OnPageChanged(pagerState.currentPage))
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.height((screenHeight * 0.78).dp)
             ) { page ->
-                viewModel.onEvent(OnboardEvent.OnPageChanged(page))
                 OnboardItem(item = pages[page], screenHeight = screenHeight)
             }
             OnboardIndicator(pagerState = pagerState)
@@ -71,12 +74,14 @@ fun OnboardScreen(screenHeight: Int) {
                 .align(Alignment.BottomCenter)
                 .padding(bottom = (screenHeight * 0.06).dp)
         ) {
-            if (pagerState.currentPage != pages.size - 1)
+            if (pagerState.currentPage != pages.size - 1) {
                 AppText(
                     text = "Lewati",
                     textStyle = bodyText14Regular,
                     color = greenPrimary,
-                    modifier = Modifier.clickable { viewModel.onEvent(OnboardEvent.SkipOnboard) })
+                    modifier = Modifier.noRippleClickable { viewModel.onEvent(OnboardEvent.SkipOnboard) }
+                )
+            }
             AppButton(
                 onClick = {
                     if (state.isLastPage)

@@ -1,5 +1,6 @@
 package com.fangga.core.data.datasource
 
+import android.util.Log
 import com.fangga.core.data.base.Resource
 import com.fangga.core.data.model.result.ScanResult
 import com.fangga.core.data.model.result.ScanResultList
@@ -76,6 +77,7 @@ class LocalDataSource(
         emit(Resource.Loading())
         try {
             val results = dao.getAllScanResults()
+            Log.d("LocalDataSource", "getAllScanResults: $results")
             if (results.isEmpty()) {
                 emit(Resource.Empty())
             } else {
@@ -83,6 +85,7 @@ class LocalDataSource(
                 emit(Resource.Success(mappedResults))
             }
         } catch (e: Exception) {
+            Log.d("LocalDataSource", "getAllScanResults: ${e.message}")
             emit(Resource.Error(e.message.toString()))
         }
     }

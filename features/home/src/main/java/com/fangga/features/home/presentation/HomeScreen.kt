@@ -18,6 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fangga.core.components.common.AppText
+import com.fangga.core.components.common.apptoast.AppToastUtil
+import com.fangga.core.components.common.apptoast.Error
+import com.fangga.core.components.common.apptoast.Success
 import com.fangga.core.data.model.enums.ResultItemSwipeType
 import com.fangga.core.resource.h10Bold
 import com.fangga.features.home.presentation.components.AboutApp
@@ -36,6 +39,16 @@ fun HomeScreen(screenHeight: Int, screenWidth: Int) {
 
     LaunchedEffect(Unit) {
         viewModel.onEvent(HomeEvent.LoadLatestResult)
+    }
+
+    if (state.showSuccessToast) {
+        AppToastUtil.ShowAppToast(message = state.successMessage.toString(), type = Success())
+        viewModel.onEvent(HomeEvent.HideToast)
+    }
+
+    if (state.showErrorToast) {
+        AppToastUtil.ShowAppToast(message = state.errorMessage.toString(), type = Error())
+        viewModel.onEvent(HomeEvent.HideToast)
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -61,14 +74,11 @@ fun HomeScreen(screenHeight: Int, screenWidth: Int) {
                         screenHeight = screenHeight,
                         screenWidth = screenWidth,
                         onItemClicked = {
-                            viewModel.onEvent(HomeEvent.OnLatestResultClicked(state.latestResult!!.resultId))
+                            viewModel.onEvent(HomeEvent.OnLatestResultClicked(context))
                         },
                         onActionClicked = {
                             viewModel.onEvent(
-                                HomeEvent.OnLatestResultSwiped(
-                                    context,
-                                    state.latestResult!!
-                                )
+                                HomeEvent.OnLatestResultSwiped(state.latestResult!!)
                             )
                         },
                         modifier = Modifier.padding(top = 8.dp)

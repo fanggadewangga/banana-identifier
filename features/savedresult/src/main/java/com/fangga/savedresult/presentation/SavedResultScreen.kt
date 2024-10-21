@@ -46,15 +46,15 @@ fun SavedResultScreen(screenHeight: Int) {
         SavedResultContent(
             results = state.results,
             topPadding = topPadding,
-            onSwipeToDelete = { id ->
+            onSwipeToDelete = { id -> viewModel.onEvent(SavedResultEvent.OnSwipeToDelete(id)) },
+            onNavigateToDetail = { item ->
                 viewModel.onEvent(
-                    SavedResultEvent.OnSwipeToDelete(
+                    SavedResultEvent.NavigateToDetail(
                         context,
-                        id
+                        item
                     )
                 )
             },
-            onNavigateToDetail = { id -> viewModel.onEvent(SavedResultEvent.NavigateToDetail(id)) },
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = Color.White)

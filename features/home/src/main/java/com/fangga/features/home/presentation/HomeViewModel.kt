@@ -1,8 +1,7 @@
 package com.fangga.features.home.presentation
 
 import android.content.Context
-import android.util.Log
-import android.widget.Toast
+import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.fangga.core.data.base.Resource
 import com.fangga.core.data.datasource.LocalDataSource
@@ -10,6 +9,7 @@ import com.fangga.core.data.model.result.ScanResultList
 import com.fangga.core.navigation.NavigationService
 import com.fangga.core.presentation.BaseViewModel
 import com.fangga.core.utils.Constants.LATEST_RESULT_ID
+import com.fangga.core.utils.saveBitmapToFileAndGetUri
 import com.fangga.core.utils.toScanResultEntity
 import com.fangga.features.home.presentation.event.HomeEvent
 import com.fangga.features.home.presentation.state.HomeState
@@ -33,7 +33,7 @@ class HomeViewModel @Inject constructor(
                     is Resource.Error -> updateUiState {
                         copy(
                             isLoading = false,
-                            error = result.message
+                            errorMessage = result.message
                         )
                     }
 
@@ -57,7 +57,7 @@ class HomeViewModel @Inject constructor(
                     is Resource.Error -> updateUiState {
                         copy(
                             isLoading = false,
-                            error = result.message
+                            errorMessage = result.message
                         )
                     }
 
@@ -70,16 +70,36 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    private fun hideToast() {
+        updateUiState {
+            copy(
+                showErrorToast = false,
+                showSuccessToast = false
+            )
+        }
+    }
+
     private fun handleScanShortcutClick() {
         navigationService.navigateTo("scan_camera")
     }
 
-    private fun handleLatestResultClick(resultId: String) {
-        navigationService.navigateTo("saved_result")
-        Log.d("HomeViewModel", "handleLatestResultClick: $resultId")
+    private fun handleLatestResultClick(context: Context) {
+        val latestResult = uiState.value.latestResult
+
+        if (latestResult != null) {
+            val capturedImage = latestResult.image
+            val capturedImageFile = saveBitmapToFileAndGetUri(context, capturedImage)
+            val encodedImageUri = Uri.encode(capturedImageFile)
+
+            navigationService.navigateTo("scan_result/false/${latestResult.resultId}/${encodedImageUri}/${latestResult.bananaType}/${latestResult.ripenessType}") {
+                launchSingleTop = true
+                restoreState = true
+            }
+        }
+
     }
 
-    private fun handleLatestResultSwiped(context: Context, latestResult: ScanResultList) {
+    private fun handleLatestResultSwiped(latestResult: ScanResultList) {
         val entity = latestResult.toScanResultEntity()
         entity.resultId = UUID.randomUUID().toString()
 
@@ -87,20 +107,34 @@ class HomeViewModel @Inject constructor(
             localDataSource.insertNewScanResult(entity).collectLatest { result ->
                 when (result) {
                     is Resource.Empty -> {
-                        updateUiState { copy(isLoading = false) }
-                        Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                        updateUiState {
+                            copy(
+                                isLoading = false,
+                                showErrorToast = true,
+                                errorMessage = "Terjadi kesalahan"
+                            )
+                        }
                     }
 
                     is Resource.Error -> {
-                        updateUiState { copy(isLoading = false, error = result.message) }
-                        Toast.makeText(context, "Gagal menyimpan hasil", Toast.LENGTH_SHORT).show()
+                        updateUiState {
+                            copy(
+                                isLoading = false,
+                                showErrorToast = true,
+                                errorMessage = result.message,
+                            )
+                        }
                     }
 
                     is Resource.Loading -> updateUiState { copy(isLoading = true) }
                     is Resource.Success -> {
+                        updateUiState {
+                            copy(
+                                successMessage = "Berhasil menyimpan hasil",
+                                showSuccessToast = true
+                            )
+                        }
                         deleteLatestResult()
-                        Toast.makeText(context, "Berhasil menyimpan hasil", Toast.LENGTH_SHORT)
-                            .show()
                     }
                 }
             }
@@ -127,14 +161,11 @@ class HomeViewModel @Inject constructor(
         when (event) {
             HomeEvent.LoadLatestResult -> loadLatestResult()
             HomeEvent.OnScanShortcutClicked -> handleScanShortcutClick()
-            is HomeEvent.OnLatestResultClicked -> handleLatestResultClick(event.resultId)
-            is HomeEvent.OnLatestResultSwiped -> handleLatestResultSwiped(
-                event.context,
-                event.latestResult
-            )
-
+            is HomeEvent.OnLatestResultClicked -> handleLatestResultClick(event.context)
+            is HomeEvent.OnLatestResultSwiped -> handleLatestResultSwiped(event.latestResult)
             is HomeEvent.OnTipsItemClicked -> handleTipsItemClicked(event.tipsId)
             is HomeEvent.OnAboutAppClicked -> handleAboutAppClicked(event.aboutId)
+            HomeEvent.HideToast -> hideToast()
         }
     }
 }

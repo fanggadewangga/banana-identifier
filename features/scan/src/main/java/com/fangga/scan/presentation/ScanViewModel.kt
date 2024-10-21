@@ -23,6 +23,7 @@ import com.fangga.core.utils.Constants.LATEST_RESULT_ID
 import com.fangga.core.utils.converterBitmapToString
 import com.fangga.core.utils.getBitmapFromUri
 import com.fangga.core.utils.mapDateToFormattedString
+import com.fangga.core.utils.saveBitmapToFileAndGetUri
 import com.fangga.core.utils.toDescription
 import com.fangga.scan.data.TfLiteClassifier
 import com.fangga.scan.presentation.event.ScanEvent
@@ -32,7 +33,6 @@ import com.fangga.scan.util.Constants
 import com.fangga.scan.util.getRotationDegreesFromUri
 import com.fangga.scan.util.hasRequiredPermission
 import com.fangga.scan.util.rotateBitmap
-import com.fangga.scan.util.saveBitmapToFileAndGetUri
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest

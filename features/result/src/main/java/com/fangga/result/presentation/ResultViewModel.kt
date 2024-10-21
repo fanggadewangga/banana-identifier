@@ -23,13 +23,28 @@ class ResultViewModel @Inject constructor(
         viewModelScope.launch {
             localDataSource.deleteScanResultById(resultId).collectLatest { result ->
                 when (result) {
-                    is Resource.Empty -> updateUiState { copy(isLoading = false) }
-                    is Resource.Error -> updateUiState { copy(isLoading = false) }
+                    is Resource.Empty -> updateUiState {
+                        copy(
+                            isLoading = false,
+                            errorMessage = "Terjadi kesalahan",
+                            showErrorToast = true
+                        )
+                    }
+
+                    is Resource.Error -> updateUiState {
+                        copy(
+                            isLoading = false,
+                            errorMessage = result.message,
+                            showErrorToast = true
+                        )
+                    }
+
                     is Resource.Loading -> updateUiState { copy(isLoading = true) }
                     is Resource.Success -> updateUiState {
                         copy(
                             isLoading = false,
-                            message = "Berhasil menghapus hasil scan"
+                            successMessage = "Berhasil menghapus hasil scan",
+                            showSuccessToast = true
                         )
                     }
                 }
@@ -47,12 +62,18 @@ class ResultViewModel @Inject constructor(
         viewModelScope.launch {
             localDataSource.insertNewScanResult(scanResult).collectLatest { result ->
                 when (result) {
-                    is Resource.Empty -> {}
+                    is Resource.Empty -> updateUiState {
+                        copy(
+                            isLoading = false,
+                            showErrorToast = true,
+                            errorMessage = "Terjadi kesalahan"
+                        )
+                    }
                     is Resource.Error -> updateUiState {
                         copy(
                             isLoading = false,
-                            isError = true,
-                            message = result.message
+                            showErrorToast = true,
+                            errorMessage = result.message
                         )
                     }
 
@@ -60,7 +81,8 @@ class ResultViewModel @Inject constructor(
                     is Resource.Success -> updateUiState {
                         copy(
                             isLoading = false,
-                            message = "Berhasil menyimpan hasil scan"
+                            successMessage = "Berhasil menyimpan hasil scan",
+                            showSuccessToast = true
                         )
                     }
                 }
@@ -80,6 +102,15 @@ class ResultViewModel @Inject constructor(
         updateUiState { copy(isShowDeletionConfirmation = isShowDeletionConfirmation) }
     }
 
+    private fun hideToast() {
+        updateUiState {
+            copy(
+                showSuccessToast = false,
+                showErrorToast = false
+            )
+        }
+    }
+
     override suspend fun handleEvent(event: ResultEvent) {
         when (event) {
             is ResultEvent.DeleteSavedResult -> deleteSavedResult(event.resultId)
@@ -88,6 +119,7 @@ class ResultViewModel @Inject constructor(
             is ResultEvent.ShowModal -> showModal(event.isShowModal)
             ResultEvent.NavigateBack -> navigateBack()
             is ResultEvent.ShowDeletionConfirmation -> showDeletionConfirmation(event.isShowDeletionConfirmation)
+            ResultEvent.HideToast -> hideToast()
         }
     }
 }

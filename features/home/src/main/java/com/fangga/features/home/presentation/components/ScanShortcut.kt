@@ -29,7 +29,6 @@ import com.fangga.core.resource.scanShortcut
 fun ScanShortcut(onClick: () -> Unit, modifier: Modifier = Modifier) {
 
     Card(
-        onClick = onClick,
         colors = CardDefaults.cardColors(containerColor = Color.White),
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(8.dp),
@@ -57,7 +56,7 @@ fun ScanShortcut(onClick: () -> Unit, modifier: Modifier = Modifier) {
                     textStyle = bodyText12Medium
                 )
                 AppButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { onClick() },
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp)
                 ) {
                     Row(
