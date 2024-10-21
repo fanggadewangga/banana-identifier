@@ -91,7 +91,7 @@ class HomeViewModel @Inject constructor(
             val capturedImageFile = saveBitmapToFileAndGetUri(context, capturedImage)
             val encodedImageUri = Uri.encode(capturedImageFile)
 
-            navigationService.navigateTo("scan_result/false/${latestResult.resultId}/${encodedImageUri}/${latestResult.bananaType}/${latestResult.ripenessType}") {
+            navigationService.navigateTo("scan_result/true/${latestResult.resultId}/${encodedImageUri}/${latestResult.bananaType}/${latestResult.ripenessType}") {
                 launchSingleTop = true
                 restoreState = true
             }
@@ -130,7 +130,7 @@ class HomeViewModel @Inject constructor(
                     is Resource.Success -> {
                         updateUiState {
                             copy(
-                                successMessage = "Berhasil menyimpan hasil",
+                                successMessage = "Berhasil menyimpan data identifikasi pisang",
                                 showSuccessToast = true
                             )
                         }

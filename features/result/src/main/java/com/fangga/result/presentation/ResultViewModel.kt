@@ -1,16 +1,21 @@
 package com.fangga.result.presentation
 
+import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.fangga.core.data.base.Resource
 import com.fangga.core.data.datasource.LocalDataSource
-import com.fangga.core.data.source.room.entity.ScanResultEntity
+import com.fangga.core.data.model.result.ScanResult
 import com.fangga.core.navigation.NavigationService
 import com.fangga.core.presentation.BaseViewModel
+import com.fangga.core.utils.Constants.LATEST_RESULT_ID
+import com.fangga.core.utils.toScanResultEntity
 import com.fangga.result.presentation.event.ResultEvent
 import com.fangga.result.presentation.state.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,15 +45,51 @@ class ResultViewModel @Inject constructor(
                     }
 
                     is Resource.Loading -> updateUiState { copy(isLoading = true) }
-                    is Resource.Success -> updateUiState {
-                        copy(
-                            isLoading = false,
-                            successMessage = "Berhasil menghapus hasil scan",
-                            showSuccessToast = true
-                        )
+                    is Resource.Success -> {
+                        updateUiState {
+                            copy(
+                                isLoading = false,
+                                successMessage = "Berhasil menghapus hasil scan",
+                                showSuccessToast = true
+                            )
+                        }
+                        viewModelScope.launch {
+                            delay(1000)
+                            navigateBack()
+                        }
                     }
                 }
             }
+        }
+    }
+
+    private fun deleteLatestResult() {
+        viewModelScope.launch {
+            localDataSource.deleteScanResultById(LATEST_RESULT_ID).collect { result ->
+                when (result) {
+                    is Resource.Empty -> updateUiState { copy(isLoading = false) }
+                    is Resource.Error -> updateUiState {
+                        copy(
+                            isLoading = false,
+                            errorMessage = result.message
+                        )
+                    }
+
+                    is Resource.Loading -> updateUiState { copy(isLoading = true) }
+                    is Resource.Success -> {
+                        viewModelScope.launch {
+                            delay(1000)
+                            navigateBack()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun navigateToSavedScreen() {
+        navigator.navigateTo("saved_result") {
+            popUpTo("saved_result") { inclusive = true }
         }
     }
 
@@ -58,32 +99,43 @@ class ResultViewModel @Inject constructor(
         }
     }
 
-    private fun saveResult(scanResult: ScanResultEntity) {
+    private fun saveResult(context: Context, item: ScanResult) {
+        val entity = item.toScanResultEntity(context)
+        entity.resultId = UUID.randomUUID().toString()
+
         viewModelScope.launch {
-            localDataSource.insertNewScanResult(scanResult).collectLatest { result ->
+            localDataSource.insertNewScanResult(entity).collectLatest { result ->
                 when (result) {
-                    is Resource.Empty -> updateUiState {
-                        copy(
-                            isLoading = false,
-                            showErrorToast = true,
-                            errorMessage = "Terjadi kesalahan"
-                        )
+                    is Resource.Empty -> {
+                        updateUiState {
+                            copy(
+                                isLoading = false,
+                                showErrorToast = true,
+                                errorMessage = "Terjadi kesalahan"
+                            )
+                        }
                     }
-                    is Resource.Error -> updateUiState {
-                        copy(
-                            isLoading = false,
-                            showErrorToast = true,
-                            errorMessage = result.message
-                        )
+
+                    is Resource.Error -> {
+                        updateUiState {
+                            copy(
+                                isLoading = false,
+                                showErrorToast = true,
+                                errorMessage = result.message,
+                            )
+                        }
                     }
 
                     is Resource.Loading -> updateUiState { copy(isLoading = true) }
-                    is Resource.Success -> updateUiState {
-                        copy(
-                            isLoading = false,
-                            successMessage = "Berhasil menyimpan hasil scan",
-                            showSuccessToast = true
-                        )
+                    is Resource.Success -> {
+                        deleteLatestResult()
+                        updateUiState {
+                            copy(
+                                isLoading = false,
+                                successMessage = "Berhasil menyimpan data identifikasi pisang",
+                                showSuccessToast = true
+                            )
+                        }
                     }
                 }
             }
@@ -115,7 +167,7 @@ class ResultViewModel @Inject constructor(
         when (event) {
             is ResultEvent.DeleteSavedResult -> deleteSavedResult(event.resultId)
             ResultEvent.RepeatScan -> navigateToScanScreen()
-            is ResultEvent.SaveResult -> saveResult(event.scanResult)
+            is ResultEvent.SaveResult -> saveResult(event.context, event.scanResult)
             is ResultEvent.ShowModal -> showModal(event.isShowModal)
             ResultEvent.NavigateBack -> navigateBack()
             is ResultEvent.ShowDeletionConfirmation -> showDeletionConfirmation(event.isShowDeletionConfirmation)

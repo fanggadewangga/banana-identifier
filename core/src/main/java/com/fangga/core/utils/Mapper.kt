@@ -1,5 +1,6 @@
 package com.fangga.core.utils
 
+import android.content.Context
 import android.net.Uri
 import com.fangga.core.data.model.result.ScanResult
 import com.fangga.core.data.model.result.ScanResultList
@@ -14,12 +15,14 @@ fun ScanResultEntity.toScanResult(): ScanResult {
     )
 }
 
-fun ScanResult.toScanResultEntity(): ScanResultEntity {
+fun ScanResult.toScanResultEntity(context: Context): ScanResultEntity {
+    val imageBitmap = getBitmapFromUri(context, image)
+    val imageToString = converterBitmapToString(imageBitmap)
     return ScanResultEntity(
         resultId = resultId,
         bananaType = bananaType,
         ripenessType = ripenessType,
-        image = image.toString(),
+        image = imageToString,
         timestamp = timestamp
     )
 }

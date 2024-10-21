@@ -15,6 +15,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fangga.core.components.common.AppTopBar
+import com.fangga.core.components.common.apptoast.AppToastUtil
+import com.fangga.core.components.common.apptoast.Error
+import com.fangga.core.components.common.apptoast.Success
 import com.fangga.savedresult.presentation.component.SavedResultContent
 import com.fangga.savedresult.presentation.event.SavedResultEvent
 
@@ -27,6 +30,15 @@ fun SavedResultScreen(screenHeight: Int) {
 
     LaunchedEffect(key1 = true) {
         viewModel.onEvent(SavedResultEvent.LoadSavedResult)
+    }
+    if (state.showSuccessToast) {
+        AppToastUtil.ShowAppToast(message = state.successMessage.toString(), type = Success())
+        viewModel.onEvent(SavedResultEvent.HideToast)
+    }
+
+    if (state.showErrorToast) {
+        AppToastUtil.ShowAppToast(message = state.errorMessage.toString(), type = Error())
+        viewModel.onEvent(SavedResultEvent.HideToast)
     }
 
     Scaffold(

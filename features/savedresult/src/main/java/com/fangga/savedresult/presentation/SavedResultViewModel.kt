@@ -2,7 +2,6 @@ package com.fangga.savedresult.presentation
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.fangga.core.data.base.Resource
 import com.fangga.core.data.datasource.LocalDataSource
@@ -27,29 +26,27 @@ class SavedResultViewModel @Inject constructor(
         viewModelScope.launch {
             localDataSource.getAllScanResults().collectLatest { result ->
                 when (result) {
-                    is Resource.Empty -> {
-                        Log.d("SavedResultViewModel", "loadSavedResult: Empty")
-                        updateUiState { copy(isLoading = false) }
+                    is Resource.Empty -> updateUiState {
+                        copy(
+                            isLoading = false,
+                            results = emptyList()
+                        )
                     }
 
-                    is Resource.Error -> {
-                        Log.d("SavedResultViewModel", "loadSavedResult: ${result.message}")
-                        updateUiState {
-                            copy(
-                                isLoading = false,
-                                errorMessage = result.message.toString(),
-                            )
-                        }
+                    is Resource.Error -> updateUiState {
+                        copy(
+                            isLoading = false,
+                            errorMessage = result.message.toString(),
+                            showErrorToast = true
+                        )
                     }
 
-                    is Resource.Loading -> {
-                        Log.d("SavedResultViewModel", "loadSavedResult: Loading")
-                        updateUiState { copy(isLoading = true) }
-                    }
-
-                    is Resource.Success -> {
-                        Log.d("SavedResultViewModel", "loadSavedResult: Success")
-                        updateUiState { copy(isLoading = false, results = result.data!!) }
+                    is Resource.Loading -> updateUiState { copy(isLoading = true) }
+                    is Resource.Success -> updateUiState {
+                        copy(
+                            isLoading = false,
+                            results = result.data!!
+                        )
                     }
                 }
             }
@@ -113,12 +110,22 @@ class SavedResultViewModel @Inject constructor(
         }
     }
 
+    private fun hideToast() {
+        updateUiState {
+            copy(
+                showErrorToast = false,
+                showSuccessToast = false
+            )
+        }
+    }
+
     override suspend fun handleEvent(event: SavedResultEvent) {
         when (event) {
             SavedResultEvent.LoadSavedResult -> loadSavedResult()
             SavedResultEvent.OnBackClicked -> onBackClicked()
             is SavedResultEvent.OnSwipeToDelete -> deleteResult(event.resultId)
             is SavedResultEvent.NavigateToDetail -> navigateToDetail(event.context, event.item)
+            SavedResultEvent.HideToast -> hideToast()
         }
     }
 }

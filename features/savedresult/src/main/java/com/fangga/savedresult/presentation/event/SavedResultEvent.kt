@@ -8,4 +8,5 @@ sealed class SavedResultEvent {
     data object OnBackClicked : SavedResultEvent()
     data class OnSwipeToDelete(val resultId: String) : SavedResultEvent()
     data class NavigateToDetail(val context: Context, val item: ScanResultList) : SavedResultEvent()
+    data object HideToast : SavedResultEvent()
 }

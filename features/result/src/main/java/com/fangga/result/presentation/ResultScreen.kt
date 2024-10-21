@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fangga.core.components.common.apptoast.AppToastUtil
@@ -24,6 +25,7 @@ fun ResultScreen(
 
     val viewModel = hiltViewModel<ResultViewModel>()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     if (state.showSuccessToast) {
         AppToastUtil.ShowAppToast(message = state.successMessage.toString(), type = Success())
@@ -42,8 +44,7 @@ fun ResultScreen(
         isShowDeletionConfirmation = state.isShowDeletionConfirmation,
         isShowBottomSheet = state.isShowModal,
         onRepeatScan = { viewModel.onEvent(ResultEvent.RepeatScan) },
-        onSaveResult = { //TODO: Handle save
-        },
+        onSaveResult = { viewModel.onEvent(ResultEvent.SaveResult(context, scanResult)) },
         onDeleteSavedResult = { viewModel.onEvent(ResultEvent.DeleteSavedResult(scanResult.resultId)) },
         onBackClick = { viewModel.onEvent(ResultEvent.NavigateBack) },
         onCancelDelete = { viewModel.onEvent(ResultEvent.ShowDeletionConfirmation(false)) },

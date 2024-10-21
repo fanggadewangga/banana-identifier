@@ -40,14 +40,9 @@ fun singleClick(onClick: () -> Unit): () -> Unit {
     }
 }
 
-fun getBitmapFromUri(context: Context, uri: Uri): Bitmap? {
-    return try {
-        val inputStream = context.contentResolver.openInputStream(uri)
-        BitmapFactory.decodeStream(inputStream)
-    } catch (e: Exception) {
-        e.printStackTrace()
-        null
-    }
+fun getBitmapFromUri(context: Context, uri: Uri): Bitmap {
+    val inputStream = context.contentResolver.openInputStream(uri)
+    return BitmapFactory.decodeStream(inputStream)
 }
 
 fun converterBitmapToString(bitmap: Bitmap): String {
