@@ -70,6 +70,5 @@ dependencies {
     implementation(libs.tensorflow.lite.task.vision)
     implementation(libs.tensorflow.lite.gpu.delegate.plugin)
     implementation(libs.tensorflow.lite.gpu)
-    implementation(libs.tensorflow.lite.support)
     implementation(libs.tensorflow.lite.metadata)
 }

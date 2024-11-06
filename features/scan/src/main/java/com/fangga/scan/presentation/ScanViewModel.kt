@@ -148,7 +148,7 @@ class ScanViewModel @Inject constructor(
                     val correctedBitmap = rotateBitmap(bitmap, rotationDegrees)
                     updateUiState { copy(capturedImage = correctedBitmap) }
 
-                    val croppedBitmap = correctedBitmap.centerCrop(224, 224)
+                    val croppedBitmap = correctedBitmap.centerCrop(240, 240)
                     analyzeCapturedImage(context, croppedBitmap, rotationDegrees)
                 }
 
@@ -168,13 +168,11 @@ class ScanViewModel @Inject constructor(
         val pickedImage = getBitmapFromUri(context, uri)
         val rotationDegrees = getRotationDegreesFromUri(context, uri)
 
-        if (pickedImage != null) {
-            val correctedBitmap = rotateBitmap(pickedImage, rotationDegrees)
-            updateUiState { copy(capturedImage = correctedBitmap) }
+        val correctedBitmap = rotateBitmap(pickedImage, rotationDegrees)
+        updateUiState { copy(capturedImage = correctedBitmap) }
 
-            val croppedBitmap = correctedBitmap.centerCrop(224, 224)
-            analyzeCapturedImage(context, croppedBitmap, rotationDegrees)
-        }
+        val croppedBitmap = correctedBitmap.centerCrop(224, 224)
+        analyzeCapturedImage(context, croppedBitmap, rotationDegrees)
     }
 
     private fun openSheet(isOpen: Boolean) {

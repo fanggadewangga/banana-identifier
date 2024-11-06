@@ -4,12 +4,13 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
 import com.fangga.core.data.model.result.BananaClassificationResult
-import com.fangga.features.scan.ml.Bananaopt
+import com.fangga.features.scan.ml.Mobilenet
 import com.fangga.scan.domain.BananaClassification
 import com.fangga.scan.domain.BananaClassifier
 import com.fangga.scan.util.rotateBitmap
 import com.fangga.scan.util.toClassificationResult
 import org.tensorflow.lite.DataType
+import org.tensorflow.lite.support.common.ops.NormalizeOp
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp
@@ -24,11 +25,11 @@ class TfLiteClassifier(
         setupModel()
     }
 
-    private var model: Bananaopt? = null
+    private var model: Mobilenet? = null
 
     private fun setupModel() {
         try {
-            model = Bananaopt.newInstance(context)
+            model = Mobilenet.newInstance(context)
         } catch (e: Exception) {
             Log.e("TfLiteClassifier", "Error loading model: ${e.message}")
             e.printStackTrace()
@@ -40,7 +41,8 @@ class TfLiteClassifier(
 
         // Process the image
         val imageProcessor = ImageProcessor.Builder()
-            .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.BILINEAR))
+            .add(ResizeOp(240, 240, ResizeOp.ResizeMethod.NEAREST_NEIGHBOR))
+            .add(NormalizeOp(0f, 1f))
             .build()
 
         val tensorImage = TensorImage(DataType.FLOAT32)
@@ -51,12 +53,10 @@ class TfLiteClassifier(
         // Convert image to ByteBuffer
         val byteBuffer = processedTensorImage.buffer
 
-        // Prepare input tensor
         val inputFeature0 =
-            TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+            TensorBuffer.createFixedSize(intArrayOf(1, 240, 240, 3), DataType.FLOAT32)
         inputFeature0.loadBuffer(byteBuffer)
 
-        // Perform inference
         val outputs = model?.process(inputFeature0)
         val outputFeature0 = outputs?.outputFeature0AsTensorBuffer
 
@@ -64,28 +64,22 @@ class TfLiteClassifier(
         val results = mutableListOf<BananaClassificationResult>()
         outputFeature0?.let { result ->
             val scores = result.floatArray
-            val maxIndex = scores.indices.maxByOrNull { scores[it] }
+            val maxResult = scores.indices.maxByOrNull { scores[it] } // Index of max score
 
-            // Log all results
-            for (i in scores.indices) {
-                val score = scores[i]
-                val classification = BananaClassification(
-                    name = "Class $i",
-                    score = score
+            if (maxResult != null && scores[maxResult] >= threshold) {
+                val bestClassification = BananaClassification(
+                    name = "Class $maxResult",
+                    score = scores[maxResult]
                 ).toClassificationResult()
-                results.add(classification)
-            }
 
-            if (maxIndex != null && scores[maxIndex] >= threshold) {
-                BananaClassification(
-                    name = "Class $maxIndex",
-                    score = scores[maxIndex]
-                ).toClassificationResult()
-            } else {
-                null
+                // Log the best result
+                Log.d("TfLiteClassifier", "Best classification: $bestClassification")
+                model?.close()
+                return listOf(bestClassification)
             }
         }
 
-        return results.distinctBy { it.bananaType.name }
+        model?.close()
+        return emptyList()
     }
 }
