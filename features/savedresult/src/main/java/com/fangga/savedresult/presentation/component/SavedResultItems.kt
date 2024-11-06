@@ -29,7 +29,9 @@ fun SavedResultItems(
                 swipeType = ResultItemSwipeType.DELETE,
                 onItemClicked = { onItemClicked(result) },
                 onActionClicked = { onSwipeToDelete(result.resultId) },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .animateItem()
             )
         }
     }
