@@ -30,7 +30,6 @@ import com.fangga.scan.presentation.event.ScanEvent
 import com.fangga.scan.presentation.state.ScanState
 import com.fangga.scan.presentation.utils.centerCrop
 import com.fangga.scan.util.Constants
-import com.fangga.scan.util.getRotationDegreesFromUri
 import com.fangga.scan.util.hasRequiredPermission
 import com.fangga.scan.util.rotateBitmap
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -148,7 +147,7 @@ class ScanViewModel @Inject constructor(
                     updateUiState { copy(capturedImage = correctedBitmap) }
 
                     val croppedBitmap = correctedBitmap.centerCrop(240, 240)
-                    analyzeCapturedImage(context, croppedBitmap, 90)
+                    analyzeCapturedImage(context, croppedBitmap)
                 }
 
                 override fun onError(exception: ImageCaptureException) {
@@ -165,13 +164,12 @@ class ScanViewModel @Inject constructor(
         openSheet(true)
 
         val pickedImage = getBitmapFromUri(context, uri)
-        val rotationDegrees = getRotationDegreesFromUri(context, uri)
 
-        val correctedBitmap = rotateBitmap(pickedImage, rotationDegrees)
+        val correctedBitmap = rotateBitmap(pickedImage, 90)
         updateUiState { copy(capturedImage = correctedBitmap) }
 
         val croppedBitmap = correctedBitmap.centerCrop(224, 224)
-        analyzeCapturedImage(context, croppedBitmap, rotationDegrees)
+        analyzeCapturedImage(context, croppedBitmap)
     }
 
     private fun openSheet(isOpen: Boolean) {
@@ -185,12 +183,11 @@ class ScanViewModel @Inject constructor(
     private fun analyzeCapturedImage(
         context: Context,
         bitmap: Bitmap,
-        rotationDegrees: Int
     ) {
         try {
             viewModelScope.launch {
                 val classifier = TfLiteClassifier(context = context)
-                val result = classifier.classify(bitmap, rotationDegrees).first()
+                val result = classifier.classify(bitmap, 90).first()
                 updateUiState { copy(scanResult = result) }
                 saveLatestScanResult()
 

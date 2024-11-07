@@ -92,7 +92,7 @@ fun ResultItem(
                     textStyle = bodyText14Medium,
                     color = if (swipeType == ResultItemSwipeType.SAVE) greenPrimary else redMainDanger,
                     modifier = Modifier
-                        .width(80.dp)
+                        .width(74.dp)
                         .align(Alignment.CenterEnd)
                 )
             }
