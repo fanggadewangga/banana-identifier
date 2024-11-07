@@ -143,13 +143,12 @@ class ScanViewModel @Inject constructor(
                     super.onCaptureSuccess(image)
 
                     val bitmap = image.toBitmap()
-                    val rotationDegrees = image.imageInfo.rotationDegrees
 
-                    val correctedBitmap = rotateBitmap(bitmap, rotationDegrees)
+                    val correctedBitmap = rotateBitmap(bitmap, 90)
                     updateUiState { copy(capturedImage = correctedBitmap) }
 
                     val croppedBitmap = correctedBitmap.centerCrop(240, 240)
-                    analyzeCapturedImage(context, croppedBitmap, rotationDegrees)
+                    analyzeCapturedImage(context, croppedBitmap, 90)
                 }
 
                 override fun onError(exception: ImageCaptureException) {

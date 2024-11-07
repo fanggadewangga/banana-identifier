@@ -1,5 +1,7 @@
 package com.fangga.bananaidentifier
 
+import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -7,7 +9,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import com.fangga.about.presentation.PrivacyPolicyScreen
 import com.fangga.core.data.model.result.ScanResult
 import com.fangga.core.utils.mapDateToFormattedString
@@ -31,6 +35,7 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var navigator: Navigator
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +43,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             val screenWidth = LocalConfiguration.current.screenWidthDp
             val screenHeight = LocalConfiguration.current.screenHeightDp
+            val context = LocalContext.current
+
+            LaunchedEffect(Unit) {
+                val activity = context as ComponentActivity
+                activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            }
 
             AppNavigation(
                 navigator = navigator,

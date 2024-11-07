@@ -1,5 +1,6 @@
 package com.fangga.result.presentation.component
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,7 +25,7 @@ fun IdentificationResult(
     onSaveResult: () -> Unit,
     onShowDeletionConfirmation: () -> Unit,
 ) {
-    Column(modifier = modifier) {
+    Column(verticalArrangement = Arrangement.SpaceAround, modifier = modifier) {
         AppText(
             text = "Hasil Identifikasi",
             textStyle = h11SemiBold,

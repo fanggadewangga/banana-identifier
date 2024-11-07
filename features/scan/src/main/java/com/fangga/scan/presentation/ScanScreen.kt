@@ -3,6 +3,7 @@ package com.fangga.scan.presentation
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.camera.core.ImageCapture
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,6 +26,7 @@ fun ScanScreen(screenHeight: Int, screenWidth: Int) {
     val cameraController = remember {
         LifecycleCameraController(context).apply {
             setEnabledUseCases(CameraController.IMAGE_CAPTURE)
+            imageCaptureMode = ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY
         }
     }
     val photoPickerLauncher = rememberLauncherForActivityResult(

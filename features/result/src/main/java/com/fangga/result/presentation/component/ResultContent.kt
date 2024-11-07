@@ -1,39 +1,42 @@
 package com.fangga.result.presentation.component
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.fangga.core.components.common.AppImage
 import com.fangga.core.data.model.result.ScanResult
 import com.fangga.core.resource.backIcon
-import kotlinx.coroutines.launch
+import com.fangga.core.utils.noRippleClickable
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ResultContent(
     modifier: Modifier = Modifier,
     screenWidth: Int,
     scanResult: ScanResult,
     isNewResult: Boolean,
-    isShowBottomSheet: Boolean,
     isShowDeletionConfirmation: Boolean,
     onRepeatScan: () -> Unit,
     onSaveResult: () -> Unit,
@@ -43,20 +46,30 @@ fun ResultContent(
     onShowDeletionConfirmation: () -> Unit,
 ) {
 
-    val sheetState = rememberModalBottomSheetState()
-    val scope = rememberCoroutineScope()
-
-    BackHandler {
-        onBackClick()
-    }
+    val screenHeight = LocalConfiguration.current.screenHeightDp
 
     Box(modifier = modifier) {
-        AppImage(
-            contentScale = ContentScale.FillHeight,
-            imageUrl = scanResult.image,
-            contentDescription = "Banana image",
-            modifier = Modifier.fillMaxHeight()
-        )
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height((screenHeight * 0.74).dp)
+        ) {
+            AppImage(
+                contentScale = ContentScale.FillBounds,
+                imageUrl = scanResult.image,
+                contentDescription = "Banana image",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height((screenHeight * 0.74).dp)
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height((screenHeight * 0.74).dp)
+                    .background(Color.Black.copy(alpha = 0.5f))
+            )
+        }
         AppImage(
             imageUrl = backIcon,
             contentDescription = "Back Icon",
@@ -64,20 +77,38 @@ fun ResultContent(
             modifier = Modifier
                 .padding(start = 24.dp, top = 48.dp)
                 .size(24.dp)
-                .clickable { onBackClick() }
+                .noRippleClickable { onBackClick() }
         )
 
-        if (isShowBottomSheet) {
-            ModalBottomSheet(
-                containerColor = Color.White,
-                sheetState = sheetState,
-                onDismissRequest = {
-                    scope.launch {
-                        sheetState.show()
-                    }
-                },
-                modifier = Modifier.wrapContentSize()
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .align(Alignment.BottomCenter)
+                .background(
+                    color = Color.White,
+                    shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
+                )
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top,
+                modifier = Modifier
+                    .wrapContentSize()
+                    .align(Alignment.TopCenter)
+                    .padding(top = 24.dp)
+                    .navigationBarsPadding()
             ) {
+                Box(
+                    modifier = Modifier
+                        .width(64.dp)
+                        .height(4.dp)
+                        .background(
+                            color = Color.LightGray, shape = RoundedCornerShape(100.dp)
+                        )
+                )
+                Spacer(Modifier.height(12.dp))
                 AnimatedVisibility(
                     visible = isShowDeletionConfirmation,
                     enter = fadeIn(animationSpec = snap()) + slideInVertically(animationSpec = snap()),
@@ -86,7 +117,7 @@ fun ResultContent(
                         screenWidth = screenWidth,
                         bananaType = scanResult.bananaType,
                         onCancelClicked = { onCancelDelete() },
-                        onDeleteClicked = { onDeleteSavedResult() }
+                        onDeleteClicked = { onDeleteSavedResult() },
                     )
                 }
                 AnimatedVisibility(
@@ -100,7 +131,7 @@ fun ResultContent(
                         onRepeatScan = { onRepeatScan() },
                         onSaveResult = { onSaveResult() },
                         onShowDeletionConfirmation = { onShowDeletionConfirmation() },
-                        modifier = Modifier.padding(24.dp)
+                        modifier = Modifier.padding(vertical = 16.dp, horizontal = 24.dp)
                     )
                 }
             }

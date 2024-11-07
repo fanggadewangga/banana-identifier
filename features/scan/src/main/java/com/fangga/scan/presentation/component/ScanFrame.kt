@@ -106,7 +106,7 @@ fun ScanFrame(
             }
         }
         AppText(
-            text = "Tempatkan gambar dalam frame",
+            text = "Tempatkan pisang dalam frame",
             textStyle = bodyText14Regular,
             textAlign = TextAlign.Center,
             color = Color.White
