@@ -18,7 +18,7 @@ class LocalDataSource(
     private val datastore: UserDataStore,
     private val dao: ScanResultDao
 ) {
-    suspend fun savePassedOnboardStatus(isPassed: Boolean): Flow<Resource<Unit>> = flow {
+    fun savePassedOnboardStatus(isPassed: Boolean): Flow<Resource<Unit>> = flow {
         emit(Resource.Loading())
         try {
             datastore.setPassedOnboardStatus(isPassed)
@@ -38,7 +38,7 @@ class LocalDataSource(
         }
     }
 
-    suspend fun insertLatestResultId(resultId: String): Flow<Resource<Unit>> = flow {
+    fun insertLatestResultId(resultId: String): Flow<Resource<Unit>> = flow {
         emit(Resource.Loading())
         try {
             datastore.setLatestResultId(resultId)
@@ -63,7 +63,7 @@ class LocalDataSource(
         }
     }
 
-    suspend fun insertNewScanResult(scanResult: ScanResultEntity): Flow<Resource<Unit>> = flow {
+    fun insertNewScanResult(scanResult: ScanResultEntity): Flow<Resource<Unit>> = flow {
         emit(Resource.Loading())
         try {
             dao.insertNewScanResult(scanResult)
@@ -73,7 +73,7 @@ class LocalDataSource(
         }
     }
 
-    suspend fun getAllScanResults(): Flow<Resource<List<ScanResultList>>> = flow {
+    fun getAllScanResults(): Flow<Resource<List<ScanResultList>>> = flow {
         emit(Resource.Loading())
         try {
             val results = dao.getAllScanResults()
@@ -90,7 +90,7 @@ class LocalDataSource(
         }
     }
 
-    suspend fun getScanResultById(resultId: String): Flow<Resource<ScanResult?>> = flow {
+    fun getScanResultById(resultId: String): Flow<Resource<ScanResult?>> = flow {
         emit(Resource.Loading())
         try {
             val result = dao.getScanResultById(resultId)
@@ -104,7 +104,7 @@ class LocalDataSource(
         }
     }
 
-    suspend fun deleteScanResultById(resultId: String): Flow<Resource<Unit>> = flow {
+    fun deleteScanResultById(resultId: String): Flow<Resource<Unit>> = flow {
         emit(Resource.Loading())
         try {
             dao.deleteScanResultById(resultId)

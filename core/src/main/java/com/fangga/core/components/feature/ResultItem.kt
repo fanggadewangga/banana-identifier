@@ -88,7 +88,7 @@ fun ResultItem(
                     .noRippleClickable { onActionClicked() }
             ) {
                 AppText(
-                    text = "Simpan",
+                    text = if (swipeType == ResultItemSwipeType.SAVE) "Simpan" else "Hapus",
                     textStyle = bodyText14Medium,
                     color = if (swipeType == ResultItemSwipeType.SAVE) greenPrimary else redMainDanger,
                     modifier = Modifier
