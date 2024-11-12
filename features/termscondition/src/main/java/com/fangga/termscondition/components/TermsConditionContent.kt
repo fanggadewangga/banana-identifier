@@ -140,7 +140,7 @@ fun TermsConditionContent(modifier: Modifier = Modifier) {
                                 textStyle = bodyText12Medium
                             )
                             AppText(
-                                text = "filkom@ub.ac.id",
+                                text = "dewi_candra@ub.ac.id",
                                 textStyle = bodyText12Medium
                             )
                         }
