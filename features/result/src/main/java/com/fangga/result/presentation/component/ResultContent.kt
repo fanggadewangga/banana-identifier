@@ -9,14 +9,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -45,96 +45,93 @@ fun ResultContent(
     onCancelDelete: () -> Unit,
     onShowDeletionConfirmation: () -> Unit,
 ) {
-
     val screenHeight = LocalConfiguration.current.screenHeightDp
+    val maxImageHeight = (screenHeight * 0.65).dp
 
-    Box(modifier = modifier) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height((screenHeight * 0.74).dp)
-        ) {
-            AppImage(
-                contentScale = ContentScale.FillBounds,
-                imageUrl = scanResult.image,
-                contentDescription = "Banana image",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height((screenHeight * 0.74).dp)
-            )
+    Column(
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier.background(color = Color.White)
+    ) {
+
+        // Result image
+        Box(modifier = Modifier.heightIn(max = maxImageHeight)) {
             Box(
+                contentAlignment = Alignment.TopCenter,
+                modifier = Modifier.heightIn(max = maxImageHeight)
+            ) {
+                AppImage(
+                    contentScale = ContentScale.FillWidth,
+                    imageUrl = scanResult.image,
+                    contentDescription = "Banana image",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = maxImageHeight)
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = maxImageHeight)
+                        .background(Color.Black.copy(alpha = 0.5f))
+                )
+            }
+            AppImage(
+                imageUrl = backIcon,
+                contentDescription = "Back Icon",
+                colorFilter = ColorFilter.tint(Color.White),
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height((screenHeight * 0.74).dp)
-                    .background(Color.Black.copy(alpha = 0.5f))
+                    .padding(start = 24.dp, top = 48.dp)
+                    .size(24.dp)
+                    .noRippleClickable { onBackClick() }
             )
         }
-        AppImage(
-            imageUrl = backIcon,
-            contentDescription = "Back Icon",
-            colorFilter = ColorFilter.tint(Color.White),
-            modifier = Modifier
-                .padding(start = 24.dp, top = 48.dp)
-                .size(24.dp)
-                .noRippleClickable { onBackClick() }
-        )
 
-        Box(
-            contentAlignment = Alignment.Center,
+        // Result data
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top,
             modifier = Modifier
+                .weight(1f)
                 .fillMaxWidth()
-                .wrapContentHeight()
-                .align(Alignment.BottomCenter)
+                .navigationBarsPadding()
+                .offset(y = (-20).dp)
                 .background(
                     color = Color.White,
                     shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
                 )
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top,
-                modifier = Modifier
-                    .wrapContentSize()
-                    .align(Alignment.TopCenter)
-                    .padding(top = 24.dp)
-                    .navigationBarsPadding()
+            Spacer(Modifier.height(24.dp))
+
+            AnimatedVisibility(
+                visible = isShowDeletionConfirmation,
+                enter = fadeIn(animationSpec = snap()) + slideInVertically(animationSpec = snap()),
             ) {
-                Box(
-                    modifier = Modifier
-                        .width(64.dp)
-                        .height(4.dp)
-                        .background(
-                            color = Color.LightGray, shape = RoundedCornerShape(100.dp)
-                        )
+                DeletionConfirmation(
+                    screenWidth = screenWidth,
+                    bananaType = scanResult.bananaType,
+                    onCancelClicked = { onCancelDelete() },
+                    onDeleteClicked = { onDeleteSavedResult() },
                 )
-                Spacer(Modifier.height(12.dp))
-                AnimatedVisibility(
-                    visible = isShowDeletionConfirmation,
-                    enter = fadeIn(animationSpec = snap()) + slideInVertically(animationSpec = snap()),
-                ) {
-                    DeletionConfirmation(
-                        screenWidth = screenWidth,
-                        bananaType = scanResult.bananaType,
-                        onCancelClicked = { onCancelDelete() },
-                        onDeleteClicked = { onDeleteSavedResult() },
-                    )
-                }
-                AnimatedVisibility(
-                    visible = !isShowDeletionConfirmation,
-                    enter = fadeIn(animationSpec = snap()) + slideInVertically(animationSpec = snap()),
-                ) {
-                    IdentificationResult(
-                        isNewResult = isNewResult,
-                        screenWidth = screenWidth,
-                        scanResult = scanResult,
-                        onRepeatScan = { onRepeatScan() },
-                        onSaveResult = { onSaveResult() },
-                        onShowDeletionConfirmation = { onShowDeletionConfirmation() },
-                        modifier = Modifier.padding(vertical = 16.dp, horizontal = 24.dp)
-                    )
-                }
             }
+
+            AnimatedVisibility(
+                visible = !isShowDeletionConfirmation,
+                enter = fadeIn(animationSpec = snap()) + slideInVertically(animationSpec = snap()),
+            ) {
+                IdentificationResult(
+                    isNewResult = isNewResult,
+                    screenWidth = screenWidth,
+                    scanResult = scanResult,
+                    onRepeatScan = { onRepeatScan() },
+                    onSaveResult = { onSaveResult() },
+                    onShowDeletionConfirmation = { onShowDeletionConfirmation() },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 24.dp)
+                )
+            }
+            Spacer(Modifier.height(24.dp))
         }
     }
 }
+

@@ -25,27 +25,29 @@ fun IdentificationResult(
     onSaveResult: () -> Unit,
     onShowDeletionConfirmation: () -> Unit,
 ) {
-    Column(verticalArrangement = Arrangement.SpaceAround, modifier = modifier) {
-        AppText(
-            text = "Hasil Identifikasi",
-            textStyle = h11SemiBold,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        IdentificationIndicator(
-            indicator = "Jenis Pisang",
-            value = scanResult.bananaType,
-            icon = bananaTypeIndicator,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        IdentificationIndicator(
-            indicator = "Tipe & Tingkat Kematangan",
-            value = scanResult.ripenessType,
-            icon = ripenessTypeIndicator,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(24.dp))
+    Column(verticalArrangement = Arrangement.SpaceBetween, modifier = modifier) {
+        Column {
+            Spacer(modifier = Modifier.height(16.dp))
+            AppText(
+                text = "Hasil Identifikasi",
+                textStyle = h11SemiBold,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            IdentificationIndicator(
+                indicator = "Jenis Pisang",
+                value = scanResult.bananaType,
+                icon = bananaTypeIndicator,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            IdentificationIndicator(
+                indicator = "Tipe & Tingkat Kematangan",
+                value = scanResult.ripenessType,
+                icon = ripenessTypeIndicator,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
         IdentificationActionButtons(
             isNewResult = isNewResult,
             screenWidth = screenWidth,

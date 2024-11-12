@@ -1,11 +1,9 @@
 package com.fangga.result.presentation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -38,9 +36,7 @@ fun ResultScreen(
     }
 
     ResultContent(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = Color.Transparent),
+        modifier = Modifier.fillMaxSize(),
         screenWidth = screenWidth,
         scanResult = scanResult,
         isNewResult = isNewResult,
