@@ -4,5 +4,5 @@ import android.graphics.Bitmap
 import com.fangga.core.data.model.result.BananaClassificationResult
 
 interface BananaClassifier {
-    fun classify(bitmap: Bitmap, rotation: Int): List<BananaClassificationResult>
+    fun classify(bitmap: Bitmap): BananaClassificationResult?
 }

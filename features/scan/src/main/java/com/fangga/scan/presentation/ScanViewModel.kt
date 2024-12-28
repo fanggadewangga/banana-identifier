@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
-import android.util.Log
 import android.widget.Toast
 import androidx.camera.core.ImageCapture.OnImageCapturedCallback
 import androidx.camera.core.ImageCaptureException
@@ -28,7 +27,6 @@ import com.fangga.core.utils.toDescription
 import com.fangga.scan.data.TfLiteClassifier
 import com.fangga.scan.presentation.event.ScanEvent
 import com.fangga.scan.presentation.state.ScanState
-import com.fangga.scan.presentation.utils.centerCrop
 import com.fangga.scan.util.Constants
 import com.fangga.scan.util.getRotationDegreesFromUri
 import com.fangga.scan.util.hasRequiredPermission
@@ -39,6 +37,67 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import javax.inject.Inject
+
+/**
+ * **Class:** ScanViewModel
+ *
+ * **Purpose:**
+ * A ViewModel class that manages the state and logic for the scan screen. It
+ * handles camera permissions, image capture, image analysis, and navigation
+ * between screens.
+ *
+ * **Annotations:**
+ * - `@HiltViewModel`: Indicates that this class is a Hilt ViewModel, which
+ *   enables dependency injection.
+ *
+ * **Parameters:**
+ * - `localDataSource`: An instance of `LocalDataSource` for accessing local data.
+ * - `navigator`: An instance of `NavigationService` for navigating between
+ *   screens.
+ *
+ * **Inheritance:**
+ * - Extends `BaseViewModel<ScanState, ScanEvent>`, which provides a base
+ *   implementation for managing UI state and events.
+ *
+ * **Functionality:**
+ * - Checks for camera permissions.
+ * - Opens or closes the gallery.
+ * - Opens or closes the help dialog.
+ * - Navigates back to the previous screen.
+ * - Navigates to the scan result screen.
+ * - Saves the latest scan result to the local data source.
+ * - Takes a picture using the camera.
+ * - Picks an image from the gallery.
+ * - Opens or closes the bottom sheet.
+ * - Shows or hides the loading indicator.
+ * - Analyzes the captured image using a TensorFlow Lite classifier.
+ * - Manages the UI state using the `ScanState` data class.
+ * - Handles events using the `ScanEvent` sealed class.
+ *
+ * **Methods:**
+ * - `checkCameraPermission(context: Context)`: Checks for camera permissions
+ *   and requests them if necessary.
+ * - `openGallery(isOpen: Boolean)`: Opens or closes the gallery.
+ * - `openHelp(isOpen: Boolean)`: Opens or closes the help dialog.
+ * - `navigateBack()`: Navigates back to the previous screen.
+ * - `navigateToScanResult(context: Context, bananaType: String, ripenessType: String)`:
+ *   Navigates to the scan result screen with the classification result.
+ * - `saveLatestScanResult()`: Saves the latest scan result to the local data
+ *   source.
+ * - `takePicture(context: Context, controller: LifecycleCameraController)`:
+ *   Takes a picture using the camera and analyzes it.
+ * - `pickImageFromGallery(context: Context, uri: Uri)`: Picks an image from
+ *   the gallery and analyzes it.
+ * - `openSheet(isOpen: Boolean)`: Opens or closes the bottom sheet.
+ * - `showLoading(isLoading: Boolean)`: Shows or hides the loading indicator.
+ * - `analyzeCapturedImage(context: Context, bitmap: Bitmap)`: Analyzes the
+ *   captured image using a TensorFlow Lite classifier.
+ * - `handleEvent(event: ScanEvent)`: Handles the different events triggered
+ *   by the UI.
+ *
+ * **Usage:**
+ * Use this class as the ViewModel for the scan screen in your application.
+ */
 
 @HiltViewModel
 class ScanViewModel @Inject constructor(
@@ -102,24 +161,19 @@ class ScanViewModel @Inject constructor(
                 timestamp = mapDateToFormattedString(date = date)
             )
 
-            Log.d("ScanViewModel", "saveLatestScanResult: $scanResult")
-
             viewModelScope.launch {
                 localDataSource.insertNewScanResult(scanResult).collectLatest { result ->
                     when (result) {
                         is Resource.Empty -> {
-                            Log.d("ScanViewModel", "saveLatestScanResult: Empty")
                             updateUiState { copy(isLoading = false) }
                         }
 
                         is Resource.Error -> {
-                            Log.d("ScanViewModel", "saveLatestScanResult: Error ${result.message}")
                             updateUiState { copy(isLoading = false) }
                         }
 
                         is Resource.Loading -> updateUiState { copy(isLoading = true) }
                         is Resource.Success -> {
-                            Log.d("ScanViewModel", "saveLatestScanResult: Success")
                             updateUiState { copy(isLoading = false) }
                         }
                     }
@@ -146,10 +200,9 @@ class ScanViewModel @Inject constructor(
                     val rotationDegrees = image.imageInfo.rotationDegrees
 
                     val correctedBitmap = rotateBitmap(bitmap, rotationDegrees)
-                    updateUiState { copy(capturedImage = correctedBitmap) }
 
-                    val croppedBitmap = correctedBitmap.centerCrop(240, 240)
-                    analyzeCapturedImage(context, croppedBitmap, rotationDegrees)
+                    updateUiState { copy(capturedImage = correctedBitmap) }
+                    analyzeCapturedImage(context, correctedBitmap)
                 }
 
                 override fun onError(exception: ImageCaptureException) {
@@ -171,8 +224,7 @@ class ScanViewModel @Inject constructor(
         val correctedBitmap = rotateBitmap(pickedImage, rotationDegrees)
         updateUiState { copy(capturedImage = correctedBitmap) }
 
-        val croppedBitmap = correctedBitmap.centerCrop(224, 224)
-        analyzeCapturedImage(context, croppedBitmap, rotationDegrees)
+        analyzeCapturedImage(context, correctedBitmap)
     }
 
     private fun openSheet(isOpen: Boolean) {
@@ -186,12 +238,11 @@ class ScanViewModel @Inject constructor(
     private fun analyzeCapturedImage(
         context: Context,
         bitmap: Bitmap,
-        rotationDegrees: Int
     ) {
         try {
             viewModelScope.launch {
                 val classifier = TfLiteClassifier(context = context)
-                val result = classifier.classify(bitmap, rotationDegrees).first()
+                val result = classifier.classify(bitmap)
                 updateUiState { copy(scanResult = result) }
                 saveLatestScanResult()
 
@@ -201,11 +252,14 @@ class ScanViewModel @Inject constructor(
                 delay(2000L)
                 openSheet(false)
 
-                navigateToScanResult(
-                    context,
-                    result.bananaType.toDescription(),
-                    result.ripenessType.toDescription()
-                )
+                if (result != null)
+                    navigateToScanResult(
+                        context,
+                        result.bananaType.toDescription(),
+                        result.ripenessType.toDescription()
+                    )
+                else
+                    Toast.makeText(context, "Gagal melakukan scan", Toast.LENGTH_SHORT).show()
 
                 updateUiState { copy(capturedImage = null) }
             }

@@ -19,6 +19,57 @@ import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
 
+/**
+ * **Class:** HomeViewModel
+ *
+ * **Purpose:**
+ * A ViewModel class that manages the state and logic for the home screen. It
+ * retrieves the latest scan result, handles user interactions, and navigates
+ * to other screens.
+ *
+ * **Annotations:**
+ * - `@HiltViewModel`: Indicates that this class is a Hilt ViewModel, which
+ *   enables dependency injection.
+ *
+ * **Parameters:**
+ * - `localDataSource`: An instance of `LocalDataSource` for accessing local data.
+ * - `navigationService`: An instance of `NavigationService` for navigating
+ *   between screens.
+ *
+ * **Inheritance:**
+ * - Extends `BaseViewModel<HomeState, HomeEvent>`, which provides a base
+ *   implementation for managing UI state and events.
+ *
+ * **Functionality:**
+ * - Loads the latest scan result from the local data source.
+ * - Handles user interactions such as clicking the scan shortcut, clicking the
+ *   latest result, swiping the latest result, clicking a tips item, and
+ *   clicking an about app item.
+ * - Navigates to other screens using the `NavigationService`.
+ * - Manages the UI state using the `HomeState` data class.
+ * - Handles events using the `HomeEvent` sealed class.
+ *
+ * **Methods:**
+ * - `loadLatestResult()`: Loads the latest scan result from the local data
+ *   source and updates the UI state.
+ * - `deleteLatestResult()`: Deletes the latest scan result from the local data
+ *   source and updates the UI state.
+ * - `hideToast()`: Hides the error and success toasts.
+ * - `handleScanShortcutClick()`: Navigates to the scan camera screen.
+ * - `handleLatestResultClick(context: Context)`: Navigates to the scan result
+ *   screen with the latest result data.
+ * - `handleLatestResultSwiped(latestResult: ScanResultList)`: Saves the latest
+ *   result to the database and deletes the old one.
+ * - `handleTipsItemClicked(tipsId: String)`: Navigates to the tips screen.
+ * - `handleAboutAppClicked(aboutId: String)`: Navigates to the privacy policy,
+ *   terms and conditions, or rating screen.
+ * - `handleEvent(event: HomeEvent)`: Handles the different events triggered by
+ *   the UI.
+ *
+ * **Usage:**
+ * Use this class as the ViewModel for the home screen in your application.
+ */
+
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val localDataSource: LocalDataSource,

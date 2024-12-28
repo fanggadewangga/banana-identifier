@@ -32,6 +32,53 @@ import com.fangga.navigation.screens.ScanResult
 import com.fangga.navigation.screens.TipsDetail
 import kotlinx.coroutines.flow.collectLatest
 
+/**
+ * **Function:** AppNavigation
+ *
+ * **Purpose:**
+ * A composable function that sets up the navigation for the entire application.
+ * It uses the Jetpack Compose Navigation library to manage navigation between
+ * different screens.
+ *
+ * **Parameters:**
+ * - `navigator`: An instance of `Navigator` for handling navigation actions.
+ * - `screenHeight`: The height of the screen in pixels, used for calculating
+ *   the height of the bottom navigation bar.
+ * - `splashScreen`: A composable function for the splash screen.
+ * - `onboardScreen`: A composable function for the onboarding screen.
+ * - `homeScreen`: A composable function for the home screen.
+ * - `tipsDetailScreen`: A composable function for the tips detail screen,
+ *   which takes a `String` representing the tips ID as a parameter.
+ * - `privacyAndPolicyScreen`: A composable function for the privacy and
+ *   policy screen.
+ * - `termsAndConditionScreen`: A composable function for the terms and
+ *   conditions screen.
+ * - `scanCameraScreen`: A composable function for the scan camera screen.
+ * - `scanResultScreen`: A composable function for the scan result screen,
+ *   which takes a `String` representing the result ID, a `String` representing
+ *   the image URI, a `String` representing the banana type, a `String`
+ *   representing the ripeness type, and a `Boolean` indicating if it's a new
+ *   result as parameters.
+ * - `savedResultScreen`: A composable function for the saved result screen.
+ *
+ * **Functionality:**
+ * - Sets up a `NavHost` to manage navigation between different screens.
+ * - Uses a `Scaffold` to provide a basic layout structure, including a
+ *   bottom navigation bar and a floating action button.
+ * - Uses a `LaunchedEffect` to collect navigation actions from the
+ *   `Navigator` and perform the corresponding navigation using the
+ *   `NavController`.
+ * - Defines the navigation graph using `composable` functions, associating
+ *   each route with a composable screen.
+ * - Handles navigation to screens with arguments by parsing the arguments
+ *   from the navigation back stack entry.
+ *
+ * **Usage:**
+ * Use this composable function as the root of your application's UI to set
+ * up navigation.
+ */
+
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AppNavigation(

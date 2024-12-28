@@ -16,6 +16,37 @@ import com.fangga.core.resource.greenPrimary
 import com.fangga.core.resource.h12SemiBold
 import com.fangga.core.utils.singleClick
 
+/**
+ * **Composable Function:** AppNavigationBar
+ *
+ * **Purpose:**
+ * A custom bottom navigation bar composable that displays a list of navigation items.
+ * This function provides a way to create a bottom navigation bar with customizable
+ * styling and behavior.
+ *
+ * **Parameters:**
+ * - `modifier`: Modifier for the layout of the navigation bar.
+ * - `onClick`: A lambda function that is called when a navigation item is clicked.
+ *   It receives the route of the clicked item as a parameter.
+ * - `isShowNavbar`: A boolean indicating whether the navigation bar should be displayed.
+ * - `items`: A list of `NavigationBarItem` objects representing the navigation items.
+ * - `currentDestination`: The current navigation destination, used to determine which
+ *   item is currently selected.
+ *
+ * **Functionality:**
+ * - Checks if the navigation bar should be displayed based on the `isShowNavbar` parameter.
+ * - Uses the `BottomNavigation` composable to create the navigation bar.
+ * - Iterates through the `items` list and creates a `BottomNavigationItem` for each item.
+ * - Determines if an item is selected based on the `currentDestination`.
+ * - Displays the selected and unselected icons for each item using `Icon` composables.
+ * - Displays the title for each item using the `AppText` composable.
+ * - Applies styling to the selected and unselected items.
+ *
+ * **Usage:**
+ * Use this composable function to create a custom bottom navigation bar in your
+ * Jetpack Compose UI.
+ **/
+
 @Composable
 fun AppNavigationBar(
     modifier: Modifier = Modifier,

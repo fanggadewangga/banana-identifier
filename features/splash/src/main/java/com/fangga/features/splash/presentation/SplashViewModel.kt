@@ -13,6 +13,51 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * **Class:** SplashViewModel
+ *
+ * **Purpose:**
+ * A ViewModel class that manages the state and logic for the splash screen. It
+ * checks if the user has passed the onboarding screen and navigates to the
+ * appropriate screen.
+ *
+ * **Annotations:**
+ * - `@HiltViewModel`: Indicates that this class is a Hilt ViewModel, which
+ *   enables dependency injection.
+ *
+ * **Parameters:**
+ * - `userRepository`: An instance of `UserRepository` for accessing user-related
+ *   data.
+ * - `navigator`: An instance of `NavigationService` for navigating between
+ *   screens.
+ *
+ * **Inheritance:**
+ * - Extends `BaseViewModel<SplashUiState, SplashUiEvent>`, which provides a
+ *   base implementation for managing UI state and events.
+ *
+ * **Functionality:**
+ * - Checks if the user has passed the onboarding screen by reading the
+ *   onboarding status from the `UserRepository`.
+ * - Navigates to the home screen if the user has passed the onboarding screen.
+ * - Navigates to the onboarding screen if the user has not passed the
+ *   onboarding screen.
+ * - Manages the UI state using the `SplashUiState` data class.
+ * - Handles events using the `SplashUiEvent` sealed class.
+ *
+ * **Methods:**
+ * - `handleEvent(event: SplashUiEvent)`: Handles the different events
+ *   triggered by the UI.
+ * - `getPassedOnboardStatus()`: Reads the onboarding status from the
+ *   `UserRepository` and updates the UI state.
+ * - `navigateToHome()`: Navigates to the home screen.
+ * - `navigateToOnboard()`: Navigates to the onboarding screen.
+ * - `handleNavigation(hasPassedOnboard: Boolean)`: Delays navigation and
+ *   navigates to the appropriate screen based on the onboarding status.
+ *
+ * **Usage:**
+ * Use this class as the ViewModel for the splash screen in your application.
+ */
+
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val userRepository: UserRepository,

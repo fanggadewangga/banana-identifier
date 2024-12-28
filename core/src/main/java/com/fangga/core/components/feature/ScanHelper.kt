@@ -23,6 +23,35 @@ import com.fangga.core.resource.scanExampleTooFar
 import com.fangga.core.resource.scanExampleTooManyType
 import com.fangga.core.resource.yellow10
 
+/**
+ * **Composable Function:** ScanHelper
+ *
+ * **Purpose:**
+ * A composable function that displays a helper section for scanning, providing
+ * examples of correct and incorrect scanning techniques.
+ *
+ * **Parameters:**
+ * - `modifier`: Modifier for the layout of the scan helper section.
+ * - `backgroundColor`: The background color of the scan helper section.
+ * - `helperHeader`: A composable lambda that defines the header content for the
+ *   scan helper section.
+ *
+ * **Functionality:**
+ * - Creates a `Box` to act as the container for the scan helper section.
+ * - Sets the background color of the scan helper section.
+ * - Displays a header using the `helperHeader` composable lambda.
+ * - Displays a text description of the correct scanning technique.
+ * - Displays an example of a correct scan using the `ScanImageExample` composable.
+ * - Displays a divider to separate the correct and incorrect examples.
+ * - Displays a text description of the incorrect scanning techniques.
+ * - Displays examples of incorrect scans using the `ScanImageExample` composable,
+ *   including examples of "too close," "too far," "blur," and "too many types."
+ *
+ * **Usage:**
+ * Use this composable function to display a scan helper section in your Jetpack Compose UI.
+ **/
+
+
 @Composable
 fun ScanHelper(
     modifier: Modifier = Modifier,

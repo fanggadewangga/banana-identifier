@@ -29,6 +29,50 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import javax.inject.Inject
 
+/**
+ * **Class:** MainActivity
+ *
+ * **Purpose:**
+ * The main entry point of the application, responsible for setting up the UI and navigation.
+ *
+ * **Dependencies:**
+ * - `@AndroidEntryPoint`: Enables Dagger-Hilt for dependency injection.
+ * - `Navigator`: Injected interface for handling screen navigation.
+ *
+ * **Functionality:**
+ * - Sets the screen orientation to portrait mode.
+ * - Uses Jetpack Compose to define the UI.
+ * - Retrieves screen dimensions and context.
+ * - Initializes the `AppNavigation` composable, which manages the app's navigation graph.
+ *
+ * **Properties:**
+ * - `navigator`: Injected `Navigator` instance for screen transitions.
+ *
+ * **Key Actions:**
+ * - `enableEdgeToEdge()`: Enables drawing behind system bars.
+ * - `setContent()`: Sets the root composable content.
+ * - `LaunchedEffect(Unit)`: Sets the screen orientation to portrait.
+ * - `AppNavigation(...)`: Configures the navigation graph with composable functions for each screen.
+ *
+ * **Navigation Setup:**
+ * The `AppNavigation` composable is configured with lambdas for each screen, including:
+ *   - `splashScreen`: The initial splash screen.
+ *   - `onboardScreen`: The onboarding flow.
+ *   - `homeScreen`: The main home screen.
+ *   - `tipsDetailScreen`: Screen for displaying detailed tips, taking a `tipsId`.
+ *   - `privacyAndPolicyScreen`: Screen for privacy policy.
+ *   - `termsAndConditionScreen`: Screen for terms and conditions.
+ *   - `scanCameraScreen`: Screen for the camera scanner.
+ *   - `scanResultScreen`: Screen for displaying scan results, taking parameters like `resultId`, `imageUri`, `bananaType`, `ripenessType`, and `isNewResult`.
+ *   - `savedResultScreen`: Screen for displaying saved scan results.
+ *
+ * **Additional Notes:**
+ * - `@SuppressLint("SourceLockedOrientationActivity")`: Suppresses lint warning for locking screen orientation.
+ * - `@RequiresApi(Build.VERSION_CODES.O)`: Requires Android 8.0 (Oreo) or higher due to `LocalDateTime`.
+ * - The `scanResultScreen` creates a `ScanResult` data class instance using the provided parameters.
+ * - The `mapDateToFormattedString` function is assumed to be defined elsewhere.
+ */
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 

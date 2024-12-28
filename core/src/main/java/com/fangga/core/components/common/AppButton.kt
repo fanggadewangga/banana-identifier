@@ -22,6 +22,43 @@ import androidx.compose.ui.unit.dp
 import com.fangga.core.resource.greenPrimary
 import com.fangga.core.utils.noRippleClickable
 
+/**
+ * **Composable Function:** AppButton
+ *
+ * **Purpose:**
+ * A custom button composable that provides a flexible and customizable button UI.
+ * This function allows you to define the button's appearance, behavior, and content.
+ *
+ * **Parameters:**
+ * - `modifier`: Modifier for the layout of the button.
+ * - `onClick`: A lambda function that is called when the button is clicked.
+ * - `backgroundColor`: The background color of the button when enabled.
+ * - `disabledBackgroundColor`: The background color of the button when disabled.
+ * - `rippleColor`: The color of the ripple effect when the button is clicked.
+ * - `enabled`: A boolean indicating whether the button is enabled or disabled.
+ * - `borderWidth`: The width of the button's border.
+ * - `borderColor`: The color of the button's border.
+ * - `shape`: The shape of the button's corners.
+ * - `contentAlignment`: The alignment of the button's content.
+ * - `contentPadding`: Padding values for the button's content.
+ * - `content`: A composable lambda that defines the content of the button.
+ *
+ * **Functionality:**
+ * - Creates a `Box` to act as the button's container.
+ * - Uses a `clip` modifier to apply the specified shape to the button.
+ * - Uses a `border` modifier to add a border to the button.
+ * - Uses a `background` modifier to set the button's background color based on its enabled state.
+ * - Uses an `onSizeChanged` modifier to track the size of the button's content.
+ * - Uses a `noRippleClickable` modifier to handle clicks and disable the ripple effect.
+ * - Provides a `content` composable lambda to define the button's content.
+ *
+ * **Usage:**
+ * Use this composable function to create custom buttons with specific styling and behavior.
+ *
+ * **Example:**
+ *
+ **/
+
 @Composable
 fun AppButton(
     modifier: Modifier = Modifier,

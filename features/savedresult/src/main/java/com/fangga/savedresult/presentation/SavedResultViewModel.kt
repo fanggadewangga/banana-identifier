@@ -16,6 +16,54 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * **Class:** SavedResultViewModel
+ *
+ * **Purpose:**
+ * A ViewModel class that manages the state and logic for the saved result
+ * screen. It loads saved scan results, handles user interactions, and
+ * navigates between screens.
+ *
+ * **Annotations:**
+ * - `@HiltViewModel`: Indicates that this class is a Hilt ViewModel, which
+ *   enables dependency injection.
+ *
+ * **Parameters:**
+ * - `localDataSource`: An instance of `LocalDataSource` for accessing local data.
+ * - `navigator`: An instance of `NavigationService` for navigating between
+ *   screens.
+ *
+ * **Inheritance:**
+ * - Extends `BaseViewModel<SavedResultState, SavedResultEvent>`, which provides
+ *   a base implementation for managing UI state and events.
+ *
+ * **Functionality:**
+ * - Loads all saved scan results from the local data source.
+ * - Handles user interactions such as clicking the back button, swiping to
+ *   delete a result, and clicking a result item.
+ * - Navigates to the home screen and the scan result detail screen using the
+ *   `NavigationService`.
+ * - Manages the UI state using the `SavedResultState` data class.
+ * - Handles events using the `SavedResultEvent` sealed class.
+ *
+ * **Methods:**
+ * - `loadSavedResult()`: Loads all saved scan results from the local data
+ *   source and updates the UI state.
+ * - `onBackClicked()`: Navigates to the home screen.
+ * - `deleteResult(resultId: String)`: Deletes a scan result from the local
+ *   data source and updates the UI state.
+ * - `navigateToDetail(context: Context, item: ScanResultList)`: Navigates to
+ *   the scan result detail screen with the selected result data.
+ * - `hideToast()`: Hides the error and success toasts.
+ * - `handleEvent(event: SavedResultEvent)`: Handles the different events
+ *   triggered by the UI.
+ *
+ * **Usage:**
+ * Use this class as the ViewModel for the saved result screen in your
+ * application.
+ */
+
+
 @HiltViewModel
 class SavedResultViewModel @Inject constructor(
     private val localDataSource: LocalDataSource,

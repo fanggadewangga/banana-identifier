@@ -21,6 +21,30 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.fangga.core.components.common.AppText
 
+/**
+ * **Object:** AppToastUtil
+ *
+ * **Purpose:**
+ * Provides utility functions for displaying custom Toast messages using Jetpack Compose.
+ * This object contains composable functions to create and configure Toast messages with
+ * specific styles and behaviors.
+ *
+ * **Functions:**
+ * - `ShowAppToast(...)`: Displays a custom Toast message with specified properties.
+ * - `SetView(...)`: Creates the composable UI for the Toast message.
+ *
+ * **Usage:**
+ * Use the `ShowAppToast` function to display a custom Toast message with the desired
+ * properties. The `SetView` function is used internally by `ShowAppToast` to create
+ * the Toast's UI.
+ *
+ * **Additional Notes:**
+ * - The `AppToast` class is assumed to be defined elsewhere and is used to create
+ *   the custom Toast.
+ * - The `AppText` composable is assumed to be defined elsewhere and is used to
+ *   display the text message within the Toast.
+ */
+
 object AppToastUtil {
 
     @Composable

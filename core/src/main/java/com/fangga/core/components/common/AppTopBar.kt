@@ -13,6 +13,31 @@ import com.fangga.core.resource.backIcon
 import com.fangga.core.resource.h11SemiBold
 import com.fangga.core.utils.noRippleClickable
 
+/**
+ * **Composable Function:** AppTopBar
+ *
+ * **Purpose:**
+ * A custom top app bar composable that displays a title and a back button.
+ * This function provides a way to create a consistent top app bar with a back
+ * navigation option.
+ *
+ * **Parameters:**
+ * - `modifier`: Modifier for the layout of the top bar.
+ * - `title`: The title text to display in the top bar.
+ * - `onNavigateBack`: A lambda function that is called when the back button is clicked.
+ *
+ * **Functionality:**
+ * - Creates a `Box` to act as the top bar's container.
+ * - Sets the background color of the top bar to white.
+ * - Displays a back button using the `AppImage` composable.
+ * - Handles clicks on the back button using the `noRippleClickable` modifier.
+ * - Displays the title text using the `AppText` composable.
+ *
+ * **Usage:**
+ * Use this composable function to create a custom top app bar in your Jetpack Compose UI.
+ *
+ **/
+
 @Composable
 fun AppTopBar(
     modifier: Modifier = Modifier,

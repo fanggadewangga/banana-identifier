@@ -15,6 +15,31 @@ import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 
+/**
+ * **Function:** MakeToast
+ *
+ * **Purpose:**
+ * Configures and displays a custom Toast message using Jetpack Compose.
+ *
+ * **Parameters:**
+ * - `modifier`: Modifier for the Toast's layout.
+ * - `message`: The text message to display in the Toast.
+ * - `duration`: The duration of the Toast (e.g., `Toast.LENGTH_SHORT`, `Toast.LENGTH_LONG`).
+ * - `type`: An `AppToastProperty` enum value that determines the Toast's background and text colors.
+ * - `paddingValues`: Padding values for the Toast's content.
+ * - `contentAlignment`: Alignment of the Toast's content.
+ *
+ * **Functionality:**
+ * - Creates a `ComposeView` to host the Compose UI.
+ * - Sets the content of the `ComposeView` using `AppToastUtil.SetView`.
+ * - Sets the `ViewTreeSavedStateRegistryOwner`, `ViewTreeLifecycleOwner`, and
+ *   `ViewTreeViewModelStoreOwner` for proper lifecycle management.
+ * - Sets the Toast's duration and view.
+ *
+ * **Composable Function:**
+ * This is a composable function, meaning it can only be called within a composable scope.
+ */
+
 class AppToast(context: Context) : Toast(context) {
     @Composable
     fun MakeToast(

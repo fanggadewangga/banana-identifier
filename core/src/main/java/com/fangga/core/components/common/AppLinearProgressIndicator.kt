@@ -20,6 +20,39 @@ import androidx.compose.ui.unit.dp
 import com.fangga.core.resource.greenPrimary
 import com.fangga.core.resource.whiteBanana
 
+/**
+ * **Composable Function:** AppLinearProgressIndicator
+ *
+ * **Purpose:**
+ * A custom linear progress indicator composable that provides a visually appealing
+ * progress bar with customizable styling.
+ *
+ * **Parameters:**
+ * - `modifier`: Modifier for the layout of the progress indicator.
+ * - `progress`: A float value between 0.0 and 1.0 representing the progress.
+ * - `height`: The height of the progress indicator.
+ * - `progressColor`: The color of the progress bar.
+ * - `backgroundColor`: The background color of the progress indicator.
+ * - `borderColor`: The border color of the progress indicator.
+ * - `shape`: The shape of the progress indicator's corners.
+ *
+ * **Functionality:**
+ * - Creates a `Box` to act as the progress indicator's container.
+ * - Uses a `clip` modifier to apply the specified shape to the progress indicator.
+ * - Uses a `background` modifier to set the background color of the progress indicator.
+ * - Uses a `border` modifier to add a border to the progress indicator.
+ * - Uses a `height` modifier to set the height of the progress indicator.
+ * - Creates a nested `Box` to represent the progress bar, filling the width based on the
+ *   provided `progress` value.
+ * - Displays a banana image at the end of the progress bar.
+ *
+ * **Usage:**
+ * Use this composable function to display a custom linear progress indicator in your
+ * Jetpack Compose UI.
+ *
+ *
+ **/
+
 @Composable
 fun AppLinearProgressIndicator(
     modifier: Modifier = Modifier,

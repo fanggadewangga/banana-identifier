@@ -9,6 +9,34 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 
+/**
+ * **Composable Function:** AppAnnotatedText
+ *
+ * **Purpose:**
+ * A composable function that displays text with support for annotated strings.
+ * This function is a wrapper around the standard `Text` composable, providing
+ * a convenient way to display text with specific styling and formatting using
+ * `AnnotatedString`.
+ *
+ * **Parameters:**
+ * - `modifier`: Modifier for the layout of the text.
+ * - `text`: The `AnnotatedString` to display.
+ * - `textAlign`: The alignment of the text within its bounds.
+ * - `color`: The color of the text.
+ * - `textStyle`: The style of the text (e.g., font, size, weight).
+ * - `overflow`: How to handle text that overflows its bounds.
+ * - `maxLine`: The maximum number of lines to display.
+ *
+ * **Functionality:**
+ * - Uses the standard `Text` composable to display the provided `AnnotatedString`.
+ * - Applies the specified `modifier`, `textAlign`, `color`, `textStyle`, `overflow`,
+ *   and `maxLine` parameters to the `Text` composable.
+ *
+ * **Usage:**
+ * Use this composable function to display text with support for annotated strings.
+ * This is useful for displaying text with different styles within the same text block.
+ **/
+
 @Composable
 fun AppAnnotatedText(
     modifier: Modifier = Modifier,

@@ -42,6 +42,37 @@ import com.fangga.core.resource.redMainDanger
 import com.fangga.core.resource.tosca10
 import com.fangga.core.utils.noRippleClickable
 
+/**
+ * **Composable Function:** ResultItem
+ *
+ * **Purpose:**
+ * A composable function that displays a result item with swipeable actions.
+ * This function is used to display a card-like item that can be swiped to reveal
+ * an action button (e.g., save or delete).
+ *
+ * **Parameters:**
+ * - `modifier`: Modifier for the layout of the result item.
+ * - `data`: The data object of type `ScanResultList` to display in the item.
+ * - `swipeType`: An enum value of type `ResultItemSwipeType` that determines the
+ *   action to be performed when swiped (e.g., save or delete).
+ * - `onItemClicked`: A lambda function that is called when the item is clicked.
+ *   It receives the `resultId` of the item as a parameter.
+ * - `onActionClicked`: A lambda function that is called when the action button is clicked.
+ *
+ * **Functionality:**
+ * - Creates a `Card` to act as the container for the result item.
+ * - Uses a `swipeable` modifier to enable swiping on the item.
+ * - Displays a revealable action button based on the `swipeType`.
+ * - Displays the main content of the item, including an image, banana type, ripeness type,
+ *   and timestamp.
+ * - Handles clicks on the item and the action button.
+ *
+ * **Usage:**
+ * Use this composable function to display result items with swipeable actions in your
+ * Jetpack Compose UI.
+ **/
+
+
 @Deprecated("Migrate Swipeable to AnchorDraggable")
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -146,5 +177,4 @@ fun ResultItem(
             }
         }
     }
-
 }
